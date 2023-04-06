@@ -1,0 +1,11 @@
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.container {
+  margin-bottom: 1rem * $blh;
+}
+
+.inputIcon {
+  font-size: inherit;
+  fill: $color-text-tertiary;
+}

@@ -1,0 +1,54 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/ui.module.scss';
+
+.button {
+  display: inline-block;
+  width: 100%;
+  font-family: inherit;
+  @include t-base;
+  font-weight: bold;
+  color: $color-text-secondary;
+  background-color: $color-ui-primary;
+  padding: 0.25rem * $blh;
+  border: 2px solid $color-ui-primary;
+  border-radius: $border-radius;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+    font-weight: bold;
+  
+  }
+
+  &:focus {
+    border: 1px solid $color-canvas-primary;
+    outline: solid 1px $color-ui-primary;
+  }
+
+  &:active {
+    color: $color-ui-primary;
+    background-color: $color-canvas-primary;
+    border-color: $color-ui-primary;
+  }
+
+  &.button--secondary {
+    color: $color-text-tertiary;
+    background-color: $color-canvas-secondary-dim;
+    border-color: $color-canvas-secondary-dim;
+
+    &:focus {
+      border: 2px solid $color-text-tertiary;
+      outline: none;
+    }
+
+    &:active {
+      background-color: $color-canvas-primary;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    left: 0.5rem * $blh;
+  }
+}

@@ -1,0 +1,13 @@
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+html {
+  font-size: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: $blh;
+  background: $color-canvas-primary;
+}

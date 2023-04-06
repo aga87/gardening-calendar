@@ -1,0 +1,49 @@
+@import '@/styles/variables/typography.module.scss';
+
+@mixin t1() {
+  $h1: 1rem *
+    ($type-scale * $type-scale * $type-scale * $type-scale * $type-scale);
+  font-size: $h1;
+  line-height: ceil(calc($h1 / $blh)) * calc($blh / $h1);
+}
+
+@mixin t2() {
+  $h2: 1rem * ($type-scale * $type-scale * $type-scale * $type-scale);
+  font-size: $h2;
+  line-height: ceil(calc($h2 / $blh)) * calc($blh / $h2);
+}
+
+@mixin t3() {
+  $h3: 1rem * ($type-scale * $type-scale * $type-scale);
+  font-size: $h3;
+  line-height: ceil(calc($h3 / $blh)) * calc($blh / $h3);
+}
+
+@mixin t4() {
+  $h4: 1rem * ($type-scale * $type-scale);
+  font-size: $h4;
+  line-height: ceil(calc($h4 / $blh)) * calc($blh / $h4);
+}
+
+@mixin t5() {
+  $h5: 1rem * $type-scale;
+  font-size: $h5;
+  line-height: ceil(calc($h5 / $blh)) * calc($blh / $h5);
+}
+
+@mixin t-base() {
+    font-size: 1rem;
+    line-height: ceil(calc(1rem / $blh)) * calc($blh / 1rem);
+}
+
+@mixin s1() {
+  $s1: calc(1rem / $type-scale);
+  font-size: $s1;
+  line-height: ceil(calc($s1 / $blh)) * calc($blh / $s1);
+}
+
+@mixin s2() {
+  $s2: 1rem / $type-scale / $type-scale;
+  font-size: $s2;
+  line-height: ceil(calc($s2 / $blh)) * calc($blh / $s2);
+}

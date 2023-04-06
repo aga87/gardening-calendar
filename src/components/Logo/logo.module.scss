@@ -1,0 +1,15 @@
+@import '@/styles/variables/colors.module.scss';
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius:  50%;
+    background-color: $color-canvas-primary;
+
+    &__icon {
+        fill: $color-canvas-secondary;
+    }
+}

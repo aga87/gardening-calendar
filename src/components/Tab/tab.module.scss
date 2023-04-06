@@ -1,0 +1,35 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.tab {
+  display: inline-block;
+  width: 100%;
+  font-family: inherit;
+  @include t-base;
+  color: $color-text-primary;
+  background-color: $color-canvas-primary;
+  padding: 0.25rem * $blh;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid $color-canvas-primary;
+  }
+
+  &.tab--secondary {
+    color: $color-text-tertiary;
+    background-color: $color-canvas-secondary;
+  }
+
+  &.tab--selected {
+    color: $color-text-secondary;
+    font-weight: bold;
+
+    @include t5;
+  }
+}

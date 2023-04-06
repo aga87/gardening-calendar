@@ -1,0 +1,38 @@
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+// Magic number
+$signInTabHeight: 320px;
+
+.auth {
+  width: 360px;
+  background-color: $color-canvas-secondary;
+  padding: 1rem * $blh;
+
+  .logoContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem * $blh;
+  }
+
+  .tabListContainer {
+    width: 250px;
+    margin: 0 auto (1rem * $blh) auto;
+  }
+
+  .signInTabPanel {
+    &__or {
+      text-align: center;
+      color: $color-text-tertiary;
+      padding: 1rem * $blh 0;
+    }
+
+    &__buttonContainer {
+      margin-bottom: 0.5rem * $blh;
+    }
+  }
+
+  .signUpTabPanel {
+    height: $signInTabHeight;
+  }
+}
