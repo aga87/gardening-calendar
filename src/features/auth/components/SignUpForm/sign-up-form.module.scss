@@ -1,3 +1,4 @@
+@import '@/styles/helpers/modular-typography.module.scss';
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
 
@@ -8,4 +9,20 @@
 .inputIcon {
   font-size: inherit;
   fill: $color-text-tertiary;
+}
+
+.progressBarContainer {
+  margin-bottom: 0.5rem * $blh;
+}
+
+.passwordFeedback {
+  list-style-position: inside;
+  color: $color-text-tertiary;
+  @include s1;
+
+  &__checkmark {
+    font-size: inherit;
+    color: $color-ui-primary;
+    margin-left: 5px;
+  }
 }

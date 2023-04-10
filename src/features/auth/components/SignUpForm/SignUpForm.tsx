@@ -1,11 +1,14 @@
 import React, { useId } from 'react';
 import {
+  CheckmarkIcon,
   EmailIcon,
   Form,
   Label,
   PasswordInput,
+  ProgressBar,
   SubmitButton,
   TextInput,
+  usePasswordStrength,
   useTextInput
 } from '@/components';
 import { useInputFocus } from '@/hooks';
@@ -20,7 +23,14 @@ export const SignUpForm = () => {
   };
 
   const email = useTextInput('');
-  const password = useTextInput('');
+
+  const {
+    password,
+    passwordStrength,
+    passwordStrengthPercentage,
+    passwordStrengthFeedback,
+    handlePasswordChange
+  } = usePasswordStrength();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,10 +57,32 @@ export const SignUpForm = () => {
         <Label text={labels.password} inputId={labels.passwordId} hidden />
         <PasswordInput
           placeholder={labels.password}
-          value={password.value}
-          handleChange={password.handleChange}
+          value={password}
+          handleChange={handlePasswordChange}
           inputId={labels.passwordId}
         />
+        {passwordStrengthPercentage > 0 && (
+          <div className={styles.progressBarContainer}>
+            <ProgressBar progress={passwordStrengthPercentage} />
+          </div>
+        )}
+        {password && (
+          <div className={styles.passwordFeedback}>
+            <p>Password must have</p>
+            <ul className={styles.passwordFeedback__list}>
+              {Object.keys(passwordStrengthFeedback).map(key => (
+                <li key={key} className={styles.passwordFeedback__listItem}>
+                  {passwordStrengthFeedback[key]}
+                  {passwordStrength[key] && (
+                    <CheckmarkIcon
+                      className={styles.passwordFeedback__checkmark}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <SubmitButton text='Sign up' />
     </Form>

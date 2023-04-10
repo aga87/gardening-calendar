@@ -2,7 +2,7 @@
 @import '@/styles/variables/typography.module.scss';
 
 // Magic number
-$signInTabHeight: 320px;
+$signUpTabHeight: 332px;
 
 .auth {
   width: 360px;
@@ -32,7 +32,7 @@ $signInTabHeight: 320px;
     }
   }
 
-  .signUpTabPanel {
-    height: $signInTabHeight;
+  .signUpTabPanel, .signInTabPanel {
+    height: $signUpTabHeight;
   }
 }
