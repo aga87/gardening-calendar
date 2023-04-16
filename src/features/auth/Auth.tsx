@@ -1,6 +1,9 @@
 import React, { useId, useState } from 'react';
 import { useAppSelector } from '@/redux/typed-hooks';
-import { selectIsLoadingSignUp } from './redux/authSlice';
+import {
+  selectIsLoadingSignIn,
+  selectIsLoadingSignUp
+} from './redux/authSlice';
 import { Logo, Tab, TabList, TabPanel } from '@/components';
 import {
   SignInForm,
@@ -20,6 +23,7 @@ export const Auth = () => {
   });
 
   const isLoadingSignUp = useAppSelector(selectIsLoadingSignUp);
+  const isLoadingSignIn = useAppSelector(selectIsLoadingSignIn);
 
   const handleSignInTabClick = () => {
     selectTab('sign-in');
@@ -34,7 +38,7 @@ export const Auth = () => {
   return (
     <div className={styles.auth}>
       <div className={styles.logoContainer}>
-        <Logo spin={isLoadingSignUp} />
+        <Logo spin={isLoadingSignIn || isLoadingSignUp} />
       </div>
       <div className={styles.tabListContainer}>
         <TabList>
