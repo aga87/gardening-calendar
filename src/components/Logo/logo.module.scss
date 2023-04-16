@@ -1,15 +1,28 @@
 @import '@/styles/variables/colors.module.scss';
 
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius:  50%;
-    background-color: $color-canvas-primary;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-    &__icon {
-        fill: $color-canvas-secondary;
-    }
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $color-canvas-primary;
+
+  &.logo--spin {
+    animation: spin infinite 2s linear;
+  }
+
+  &__icon {
+    fill: $color-canvas-secondary;
+  }
 }

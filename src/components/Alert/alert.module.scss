@@ -1,0 +1,38 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
+
+.alert {
+  display: flex;
+  @include s1;
+  color: $color-text-primary;
+  padding: 0.25rem * $blh 10px;
+  border: 2px solid $color-text-primary;
+  border-radius: $border-radius;
+
+  &.alert--secondary {
+    color: $color-text-secondary;
+  }
+
+  &.alert--error {
+    border-color: $color-ui-danger;
+  }
+
+  &.alert--success {
+    border-color: $color-ui-success;
+  }
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 10px;
+
+  &.icon--error {
+    color: $color-ui-danger;
+  }
+
+  &.icon--success {
+    color: $color-ui-success;
+  }
+}

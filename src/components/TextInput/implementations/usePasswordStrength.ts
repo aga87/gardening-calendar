@@ -1,20 +1,13 @@
-// https://timetoprogram.com/check-password-strength-react/
-
 import { useState } from 'react';
 import { useTextInput } from '../useTextInput';
 
-// https://iyurisko.medium.com/build-simple-password-strength-meter-in-react-js-7a33c04b9ab5
-
 export const usePasswordStrength = () => {
-  //   const [password, setPassword] = useState('');
-
   const { value: password, handleChange } = useTextInput('');
-  //   const password = value;
 
   const [passwordStrength, setPasswordStrength] = useState<{
     [key: string]: boolean;
   }>({
-    hasMin5Characters: false,
+    hasMin8Characters: false,
     hasUpperCase: false,
     hasLowerCase: false,
     hasDigit: false,
@@ -22,18 +15,17 @@ export const usePasswordStrength = () => {
   });
 
   const checkPasswordStrength = (password: string) => ({
-    hasMin5Characters: password.length >= 5,
+    hasMin8Characters: password.length >= 8,
     hasUpperCase: /[A-Z]+/.test(password),
     hasLowerCase: /[a-z]+/.test(password),
     hasDigit: /[0-9]+/.test(password),
-    // hasSpecialChar: /[^A-Za-z0-9]+/.test(password)
     hasSpecialChar: /[@#$]/.test(password)
   });
 
   const passwordStrengthFeedback: {
     [key: string]: string;
   } = {
-    hasMin5Characters: 'at least 5 characters',
+    hasMin8Characters: 'at least 8 characters',
     hasUpperCase: 'at least one uppercase character',
     hasLowerCase: 'at least one lowercase character',
     hasDigit: 'at least one digit',
@@ -43,7 +35,6 @@ export const usePasswordStrength = () => {
   const handlePasswordChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // setPassword(e.target.value);
     handleChange(e);
     setPasswordStrength(checkPasswordStrength(e.target.value));
   };

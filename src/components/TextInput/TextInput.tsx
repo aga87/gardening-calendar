@@ -30,11 +30,11 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     let inputContainerClassName = styles.inputContainer;
     if (errorMsg) {
-      inputContainerClassName = `${inputContainerClassName} ${styles['input--error']}`;
+      inputContainerClassName = `${inputContainerClassName} ${styles['inputContainer--error']}`;
     }
 
     return (
-      <>
+      <div className={styles.container}>
         <div className={inputContainerClassName}>
           <input
             ref={ref}
@@ -52,11 +52,16 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {icon && icon}
         </div>
         {errorMsg && (
-          <div id={errorId} role='alert' aria-live='assertive'>
+          <div
+            id={errorId}
+            role='alert'
+            aria-live='assertive'
+            className={styles.input__error}
+          >
             {errorMsg}
           </div>
         )}
-      </>
+      </div>
     );
   }
 );

@@ -9,7 +9,7 @@ type SubmitButtonProps = {
 
 export const SubmitButton = ({
   text,
-  formId = '',
+  formId = undefined,
   variant = 'primary'
 }: SubmitButtonProps) => {
   let className = styles.button;

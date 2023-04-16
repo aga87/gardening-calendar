@@ -1,5 +1,6 @@
 import React, { useId } from 'react';
 import {
+  Alert,
   CheckmarkIcon,
   EmailIcon,
   Form,
@@ -7,11 +8,10 @@ import {
   PasswordInput,
   ProgressBar,
   SubmitButton,
-  TextInput,
-  usePasswordStrength,
-  useTextInput
+  TextInput
 } from '@/components';
 import { useInputFocus } from '@/hooks';
+import { useSignUpForm } from './useSignUpForm';
 import styles from './sign-up-form.module.scss';
 
 export const SignUpForm = () => {
@@ -22,37 +22,50 @@ export const SignUpForm = () => {
     passwordId: useId()
   };
 
-  const email = useTextInput('');
+  //  Focus first input when the form renders
+  const firstInputRef = useInputFocus();
 
   const {
+    email,
+    handleEmailChange,
     password,
     passwordStrength,
     passwordStrengthPercentage,
     passwordStrengthFeedback,
-    handlePasswordChange
-  } = usePasswordStrength();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log('submit');
-  };
-
-  //  Focus first input when the form renders
-  const firstInputRef = useInputFocus();
+    handlePasswordChange,
+    handleSubmit,
+    formErrors,
+    signUpError,
+    isVerificationEmailSent
+  } = useSignUpForm();
 
   return (
     <Form formLabel='Sign up' handleSubmit={handleSubmit}>
       <div className={styles.container}>
+        {signUpError && (
+          <div className={styles.alertContainer}>
+            <Alert type='error' variant='secondary' message={signUpError} />
+          </div>
+        )}
+        {isVerificationEmailSent && (
+          <div className={styles.alertContainer}>
+            <Alert
+              type='success'
+              variant='secondary'
+              message='Verification email has been sent. Please check your inbox (including the spam folder).'
+            />
+          </div>
+        )}
         <Label text={labels.email} inputId={labels.emailId} hidden />
         <TextInput
           ref={firstInputRef}
           type='email'
           placeholder={labels.email}
           icon={<EmailIcon className={styles.inputIcon} />}
-          value={email.value}
-          handleChange={email.handleChange}
+          value={email}
+          handleChange={handleEmailChange}
           inputId={labels.emailId}
+          errorMsg={formErrors.email}
         />
         <Label text={labels.password} inputId={labels.passwordId} hidden />
         <PasswordInput
@@ -60,28 +73,29 @@ export const SignUpForm = () => {
           value={password}
           handleChange={handlePasswordChange}
           inputId={labels.passwordId}
+          errorMsg={formErrors.password}
         />
-        {passwordStrengthPercentage > 0 && (
-          <div className={styles.progressBarContainer}>
-            <ProgressBar progress={passwordStrengthPercentage} />
-          </div>
-        )}
-        {password && (
-          <div className={styles.passwordFeedback}>
-            <p>Password must have</p>
-            <ul className={styles.passwordFeedback__list}>
-              {Object.keys(passwordStrengthFeedback).map(key => (
-                <li key={key} className={styles.passwordFeedback__listItem}>
-                  {passwordStrengthFeedback[key]}
-                  {passwordStrength[key] && (
-                    <CheckmarkIcon
-                      className={styles.passwordFeedback__checkmark}
-                    />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+        {password && !isVerificationEmailSent && (
+          <>
+            <div className={styles.progressBarContainer}>
+              <ProgressBar progress={passwordStrengthPercentage} />
+            </div>
+            <div className={styles.passwordFeedback}>
+              <p>Password must have</p>
+              <ul className={styles.passwordFeedback__list}>
+                {Object.keys(passwordStrengthFeedback).map(key => (
+                  <li key={key} className={styles.passwordFeedback__listItem}>
+                    {passwordStrengthFeedback[key]}
+                    {passwordStrength[key] && (
+                      <CheckmarkIcon
+                        className={styles.passwordFeedback__checkmark}
+                      />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
         )}
       </div>
       <SubmitButton text='Sign up' />

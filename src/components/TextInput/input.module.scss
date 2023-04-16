@@ -5,6 +5,10 @@
 
 $padding: 0.25rem * $blh;
 
+.container {
+  margin-bottom: 0.5rem * $blh;
+}
+
 .inputContainer {
   display: flex;
   align-items: center;
@@ -12,10 +16,13 @@ $padding: 0.25rem * $blh;
   padding-right: 2 * $padding;
   border: 2px solid $color-canvas-secondary-dim;
   border-radius: $border-radius;
-  margin-bottom: 0.5rem * $blh;
 
   &:focus-within {
     border: 1px solid $color-text-tertiary;
+  }
+
+  &.inputContainer--error {
+    border: 1px solid $color-ui-danger;
   }
 }
 
@@ -38,5 +45,12 @@ $padding: 0.25rem * $blh;
 
   &::placeholder {
     color: $color-text-tertiary;
+  }
+
+  &__error {
+    @include s2;
+    color: $color-ui-danger;
+    font-weight: bold;
+    padding-left: 10px;
   }
 }

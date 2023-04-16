@@ -8,7 +8,7 @@
   font-family: inherit;
   @include t-base;
   color: $color-text-primary;
-  background-color: $color-canvas-primary;
+  background-color: inherit;
   padding: 0.25rem * $blh;
   border: none;
 
@@ -23,7 +23,7 @@
 
   &.tab--secondary {
     color: $color-text-tertiary;
-    background-color: $color-canvas-secondary;
+    background-color: inherit;
   }
 
   &.tab--selected {

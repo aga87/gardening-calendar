@@ -33,6 +33,6 @@ $signUpTabHeight: 332px;
   }
 
   .signUpTabPanel, .signInTabPanel {
-    height: $signUpTabHeight;
+    min-height: $signUpTabHeight;
   }
 }

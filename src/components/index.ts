@@ -1,3 +1,4 @@
+export * from './Alert/Alert';
 export * from './buttons/Button/Button';
 export * from './buttons/SubmitButton/SubmitButton';
 export * from './Form/Form';
