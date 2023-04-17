@@ -1,8 +1,10 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   User as FirebaseUser
 } from 'firebase/auth';
@@ -61,6 +63,16 @@ export const AuthService = {
           'Please verify your email address. Check your inbox (including your spam folder) for a verification email or request a new one.'
         );
       }
+      return { error: null };
+    } catch (err: unknown) {
+      return { error: getErrorMessage(err) };
+    }
+  },
+
+  signInWithGoogle: async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider); // (You can access the user's Google account data with `result.additionalUserInfo.profile`).
       return { error: null };
     } catch (err: unknown) {
       return { error: getErrorMessage(err) };
