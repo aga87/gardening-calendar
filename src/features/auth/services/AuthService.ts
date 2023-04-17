@@ -65,6 +65,15 @@ export const AuthService = {
     } catch (err: unknown) {
       return { error: getErrorMessage(err) };
     }
+  },
+
+  signOut: async () => {
+    try {
+      await signOut(auth);
+      return { error: null };
+    } catch (err: unknown) {
+      return { error: getErrorMessage(err) };
+    }
   }
 };
 

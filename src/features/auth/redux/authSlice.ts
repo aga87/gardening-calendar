@@ -15,6 +15,7 @@ const initialState = {
   isLoadingSignIn: false,
   signInError: null as null | string,
   signUpError: null as null | string,
+  signOutError: null as null | string,
   isVerificationEmailSent: false,
   verificationEmailError: null as null | string
 };
@@ -49,6 +50,10 @@ export const authSlice = createSlice({
       ...state,
       signInError: action.payload
     }),
+    setSignOutError: (state, action: PayloadAction<string | null>) => ({
+      ...state,
+      signOutError: action.payload
+    }),
     setVerificationEmailError: (
       state,
       action: PayloadAction<string | null>
@@ -67,6 +72,7 @@ const {
   setSignInLoading,
   setSignUpError,
   setSignInError,
+  setSignOutError,
   setVerificationEmailSent,
   setVerificationEmailError
 } = authSlice.actions;
@@ -117,6 +123,11 @@ export const signIn =
     dispatch(setSignInError(error));
     dispatch(setSignInLoading(false));
   };
+
+export const signOut = (): AppThunk => async dispatch => {
+  const { error } = await AuthService.signOut();
+  dispatch(setSignOutError(error));
+};
 
 // SELECTORS
 // User
