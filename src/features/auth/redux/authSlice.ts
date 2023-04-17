@@ -11,6 +11,7 @@ type User = { userEmail: string; emailVerified: boolean };
 
 const initialState = {
   user: null as null | User,
+  isLoadingCurrentUser: true, // initial authentication check
   isLoadingSignUp: false,
   isLoadingSignIn: false,
   signInError: null as null | string,
@@ -27,6 +28,10 @@ export const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => ({
       ...state,
       user: action.payload
+    }),
+    setCurrentUserLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingCurrentUser: action.payload
     }),
     // Sign up
     setSignUpLoading: (state, action: PayloadAction<boolean>) => ({
@@ -68,6 +73,7 @@ export default authSlice.reducer;
 
 export const { setUser } = authSlice.actions;
 const {
+  setCurrentUserLoading,
   setSignUpLoading,
   setSignInLoading,
   setSignUpError,
@@ -90,6 +96,7 @@ export const subscribeToAuthStateChanges =
             : null
         )
       );
+      dispatch(setCurrentUserLoading(false));
     });
 
     return unsubscribe;
@@ -136,6 +143,9 @@ export const selectUserEmail = (state: RootState): string =>
 
 export const selectIsUserVerified = (state: RootState): boolean =>
   state.authReducer.user?.emailVerified || false;
+
+export const selectIsCurrentUserLoading = (state: RootState): boolean =>
+  state.authReducer.isLoadingCurrentUser;
 
 // Sign up
 export const selectIsLoadingSignUp = (state: RootState): boolean =>
