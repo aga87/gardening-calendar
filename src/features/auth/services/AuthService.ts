@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
@@ -73,6 +74,16 @@ export const AuthService = {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider); // (You can access the user's Google account data with `result.additionalUserInfo.profile`).
+      return { error: null };
+    } catch (err: unknown) {
+      return { error: getErrorMessage(err) };
+    }
+  },
+
+  signInWithGitHub: async () => {
+    const provider = new GithubAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
       return { error: null };
     } catch (err: unknown) {
       return { error: getErrorMessage(err) };

@@ -1,11 +1,16 @@
 import React from 'react';
+import { useAppDispatch } from '@/redux/typed-hooks';
+import { signInWithGitHub } from '../../redux/authSlice';
 import { Button, GitHubIcon } from '@/components';
 import styles from './sign-in-with-github.module.scss';
 
 export const SignInWithGitHub = () => {
+  const dispatch = useAppDispatch();
+
   const handleClick = () => {
-    console.log('click');
+    dispatch(signInWithGitHub());
   };
+
   return (
     <Button
       variant='secondary'

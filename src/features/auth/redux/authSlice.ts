@@ -138,6 +138,13 @@ export const signInWithGoogle = (): AppThunk => async dispatch => {
   dispatch(setSignInLoading(false));
 };
 
+export const signInWithGitHub = (): AppThunk => async dispatch => {
+  dispatch(setSignInLoading(true));
+  const { error } = await AuthService.signInWithGitHub();
+  dispatch(setSignInError(error));
+  dispatch(setSignInLoading(false));
+};
+
 export const signOut = (): AppThunk => async dispatch => {
   const { error } = await AuthService.signOut();
   dispatch(setSignOutError(error));
