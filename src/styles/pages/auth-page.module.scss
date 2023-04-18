@@ -1,0 +1,21 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../../public//img/food.jpg');
+  background-size: cover;
+}
+
+.footer {
+  text-align: center;
+  background-color: #ffffffd4;
+  
+  &__link {
+    color: $color-text-primary;
+    @include s2;
+  }
+}

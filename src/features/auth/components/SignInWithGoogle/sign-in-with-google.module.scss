@@ -1,0 +1,7 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+
+.icon {
+  @include t3;
+  fill: $color-text-tertiary;
+}

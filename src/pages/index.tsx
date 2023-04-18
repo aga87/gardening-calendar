@@ -1,7 +1,7 @@
-const Home = () => (
-  <main>
-    <h1>Home</h1>
-  </main>
-);
+import { SignOut } from '@/features/auth/components';
+
+const Home = () => {
+  return <SignOut />;
+};
 
 export default Home;

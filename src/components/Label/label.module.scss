@@ -1,0 +1,15 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/helpers/visually-hidden.module.scss';
+
+.label {
+  display: flex;
+  justify-content: space-between;
+
+  &.label--hidden {
+    @include visually-hidden;
+  }
+
+  &__optional {
+    @include s1;
+  }
+}

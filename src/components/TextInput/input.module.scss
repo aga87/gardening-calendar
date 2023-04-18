@@ -1,0 +1,56 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
+
+$padding: 0.25rem * $blh;
+
+.container {
+  margin-bottom: 0.5rem * $blh;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  background-color: $color-canvas-secondary-dim;
+  padding-right: 2 * $padding;
+  border: 2px solid $color-canvas-secondary-dim;
+  border-radius: $border-radius;
+
+  &:focus-within {
+    border: 1px solid $color-text-tertiary;
+  }
+
+  &.inputContainer--error {
+    border: 1px solid $color-ui-danger;
+  }
+}
+
+.input {
+  display: inline-block;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  @include t-base;
+  color: $color-text-secondary;
+  background-color: $color-canvas-secondary-dim;
+  padding: $padding 0;
+  padding-left: 2 * $padding;
+  border: none;
+  border-radius: $border-radius;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $color-text-tertiary;
+  }
+
+  &__error {
+    @include s2;
+    color: $color-ui-danger;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+}
