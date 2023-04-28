@@ -16,6 +16,20 @@ export const addPlant = async (
   return foundPlant;
 };
 
+export const getPlant = async ({
+  plantId,
+  userId
+}: {
+  plantId: string;
+  userId: string;
+}): Promise<PlantRes | null> => {
+  const plant: PlantRes | null = await Plant.findOne({
+    _id: plantId,
+    userId
+  }).select(select);
+  return plant;
+};
+
 export const getPlantsWithCount = async (
   userId: string
 ): Promise<PlantsWithCountRes> => {
