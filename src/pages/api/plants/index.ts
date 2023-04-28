@@ -1,8 +1,8 @@
-import type { NextApiRequest } from 'next';
 import { connectToDB } from '@/api/libs/db';
 import { getPlantsWithCount } from '@/api/services/plant-data.service';
-import { errMiddleware } from '@/api/middleware';
+import { authMiddleware, errMiddleware } from '@/api/middleware';
 import type {
+  CustomReq,
   PlantsWithCountRes,
   PlantRes,
   Res,
@@ -11,10 +11,7 @@ import type {
 
 type Data = PlantsWithCountRes | PlantRes;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: Res<Data | ServerError>
-) {
+const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
   await connectToDB();
 
   const { method } = req;
@@ -29,7 +26,9 @@ export default async function handler(
       }
       break;
     default:
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).send({ error: `Method ${method} Not Allowed` });
   }
-}
+};
+
+export default authMiddleware(handler);
