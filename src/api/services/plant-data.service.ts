@@ -16,6 +16,26 @@ export const addPlant = async (
   return foundPlant;
 };
 
+export const editPlant = async ({
+  plantId,
+  updatedPlant,
+  userId
+}: {
+  plantId: string;
+  updatedPlant: Omit<PlantRes, '_id'>;
+  userId: string;
+}): Promise<PlantRes | null> => {
+  const plant: PlantRes | null = await Plant.findOneAndUpdate(
+    { _id: plantId, userId },
+    updatedPlant,
+    {
+      new: true,
+      runValidators: true
+    }
+  ).select(select);
+  return plant;
+};
+
 export const getPlant = async ({
   plantId,
   userId

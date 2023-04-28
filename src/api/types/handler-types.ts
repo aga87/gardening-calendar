@@ -12,5 +12,5 @@ export type CustomHandler<T = any> = (
 ) => unknown | Promise<unknown>;
 
 export type ServerError = {
-  error: string;
+  error: string | string[];
 };
