@@ -1,5 +1,9 @@
 import { connectToDB } from '@/api/libs/db';
-import { getPlantsWithCount } from '@/api/services/plant-data.service';
+import {
+  addPlant,
+  getPlantsWithCount
+} from '@/api/services/plant-data.service';
+import { validatePlantSchema } from '@/api/models/Plant';
 import { authMiddleware, errMiddleware } from '@/api/middleware';
 import type {
   CustomReq,
@@ -21,6 +25,20 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       try {
         const plantsWithCount = await getPlantsWithCount(req.user);
         return res.status(200).json(plantsWithCount);
+      } catch (err: unknown) {
+        errMiddleware(err, res);
+      }
+      break;
+    case 'POST':
+      const error = validatePlantSchema(req.body);
+      if (error) return res.status(400).send({ error: error.join('. ') });
+      try {
+        const newPlant = await addPlant({ ...req.body, userId: req.user });
+        res.setHeader(
+          'location',
+          `${req.headers.host}/api/plants/${newPlant._id}`
+        );
+        return res.status(201).send(newPlant);
       } catch (err: unknown) {
         errMiddleware(err, res);
       }
