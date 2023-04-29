@@ -1,10 +1,10 @@
 import { Plant } from '../models/Plant';
 import type { PlantRecord, PlantRes, PlantsWithCountRes } from '../types';
 
-const select = '-__v -userId';
+const select = '-__v -userId -isInTrash';
 
 export const addPlant = async (
-  plant: Omit<PlantRecord, '_id'>
+  plant: Omit<PlantRecord, '_id' | 'isInTrash'>
 ): Promise<PlantRes> => {
   const savedPlant: PlantRecord = await new Plant(plant).save();
   const foundPlant: PlantRes = await Plant.findById(savedPlant._id).select(
@@ -19,20 +19,33 @@ export const addPlant = async (
 export const editPlant = async ({
   plantId,
   updatedPlant,
-  userId
+  userId,
+  plantInTrashErrorMsg
 }: {
   plantId: string;
-  updatedPlant: Omit<PlantRes, '_id'>;
+  updatedPlant: Omit<PlantRes, '_id' | 'isInTrash'>;
   userId: string;
+  plantInTrashErrorMsg: string;
 }): Promise<PlantRes | null> => {
+  const query = {
+    _id: plantId,
+    userId
+  };
+  const plantInDB: PlantRecord | null = await Plant.findOne(query);
+
+  if (plantInDB?.isInTrash) {
+    throw new Error(plantInTrashErrorMsg);
+  }
+
   const plant: PlantRes | null = await Plant.findOneAndUpdate(
-    { _id: plantId, userId },
+    query,
     updatedPlant,
     {
       new: true,
       runValidators: true
     }
   ).select(select);
+
   return plant;
 };
 
@@ -50,12 +63,38 @@ export const getPlant = async ({
   return plant;
 };
 
-export const getPlantsWithCount = async (
-  userId: string
-): Promise<PlantsWithCountRes> => {
-  const plants = await Plant.find({ userId }).select(select).sort({ name: 1 });
+export const getPlantsWithCount = async ({
+  isInTrash,
+  userId
+}: {
+  isInTrash: boolean;
+  userId: string;
+}): Promise<PlantsWithCountRes> => {
+  const plants = await Plant.find({ isInTrash, userId })
+    .select(select)
+    .sort({ name: 1 });
   return {
     count: plants.length,
     plants
   };
+};
+
+export const updatePlantTrashStatus = async ({
+  plantId,
+  isInTrash,
+  userId
+}: {
+  plantId: string;
+  isInTrash: boolean;
+  userId: string;
+}) => {
+  const plant: PlantRes | null = await Plant.findOneAndUpdate(
+    { _id: plantId, userId },
+    { $set: { isInTrash } },
+    {
+      new: true,
+      runValidators: true
+    }
+  ).select(select);
+  return plant;
 };

@@ -22,8 +22,19 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
 
   switch (method) {
     case 'GET':
+      const {
+        query: { isInTrash }
+      } = req;
+      if (isInTrash !== 'true' && isInTrash !== 'false')
+        return res.status(400).send({
+          error:
+            'The "isInTrash" query parameter must be either "true" or "false".'
+        });
       try {
-        const plantsWithCount = await getPlantsWithCount(req.user);
+        const plantsWithCount = await getPlantsWithCount({
+          isInTrash: isInTrash === 'true' ? true : false,
+          userId: req.user
+        });
         return res.status(200).json(plantsWithCount);
       } catch (err: unknown) {
         errMiddleware(err, res);

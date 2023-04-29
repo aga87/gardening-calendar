@@ -25,7 +25,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
         const plant = await getPlant({ plantId: id, userId: req.user });
         if (!plant)
           return res
-            .status(400)
+            .status(404)
             .send({ error: 'Plant with the given ID was not found.' });
         res.status(200).send(plant);
       } catch (err: unknown) {
@@ -33,20 +33,24 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       }
       break;
     case 'PATCH':
+      const PLANT_IN_TRASH_ERROR_MSG = 'Cannot edit a plant that is in trash.';
       const error = validatePlantSchema(req.body);
       if (error) return res.status(400).send({ error });
       try {
         const plant = await editPlant({
           plantId: id,
           updatedPlant: req.body,
-          userId: req.user
+          userId: req.user,
+          plantInTrashErrorMsg: PLANT_IN_TRASH_ERROR_MSG
         });
         if (!plant)
           return res
-            .status(400)
+            .status(404)
             .send({ error: 'Plant with the given ID was not found.' });
         return res.status(200).send(plant);
       } catch (err: unknown) {
+        if (err instanceof Error && err.message === PLANT_IN_TRASH_ERROR_MSG)
+          return res.status(400).send({ error: PLANT_IN_TRASH_ERROR_MSG });
         errMiddleware(err, res);
       }
       break;

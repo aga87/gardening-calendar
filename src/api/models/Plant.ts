@@ -108,6 +108,11 @@ const PlantSchema = new Schema<PlantRecord>({
       message: invalidMonthMsg
     }
   },
+  isInTrash: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   userId: {
     type: String,
     required: true
@@ -117,7 +122,7 @@ const PlantSchema = new Schema<PlantRecord>({
 // Model
 export const Plant = models.plant || model<PlantRecord>('plant', PlantSchema); // models.plant solves "Cannot overwrite `plant` model once compiled" error
 
-// Joi Plant Schema pre-save validator
+// Pre-save validators
 
 export const validatePlantSchema = (plant: unknown): null | string[] => {
   const JoiMonth = Joi.number().integer().min(1).max(12);
@@ -152,5 +157,14 @@ export const validatePlantSchema = (plant: unknown): null | string[] => {
     error.details.forEach(error => errorList.push(error.message));
     return errorList;
   }
+  return null;
+};
+
+export const validatePlantStatusSchema = (status: unknown): null | string => {
+  const statusSchema = Joi.object({
+    isInTrash: Joi.boolean().required()
+  });
+  const { error } = statusSchema.validate(status);
+  if (error) return error.message;
   return null;
 };
