@@ -16,6 +16,30 @@ export const addPlant = async (
   return foundPlant;
 };
 
+export const deletePlantsFromTrash = async ({
+  plantIds,
+  userId,
+  plantInTrashErrorMsg
+}: {
+  plantIds: string[];
+  userId: string;
+  plantInTrashErrorMsg: string;
+}): Promise<number> => {
+  const query = {
+    _id: { $in: plantIds },
+    isInTrash: true,
+    userId
+  };
+  // Check if all the plants to be deleted are in the trash
+  const plantsInTrash = await Plant.find(query);
+  if (plantsInTrash.length !== plantIds.length) {
+    throw Error(plantInTrashErrorMsg);
+  }
+  // Delete the plants from the database
+  const { deletedCount } = await Plant.deleteMany(query);
+  return deletedCount;
+};
+
 export const editPlant = async ({
   plantId,
   updatedPlant,
