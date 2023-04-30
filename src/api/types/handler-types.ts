@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export interface CustomReq extends NextApiRequest {
-  user: string;
+  userId: string;
 }
 
 export type Res<Data> = NextApiResponse<Data>;

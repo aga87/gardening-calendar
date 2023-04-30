@@ -19,7 +19,7 @@ type Data = PlantsWithCountRes | PlantRes | { message: string };
 const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
   await connectToDB();
 
-  const { method } = req;
+  const { method, userId } = req;
 
   switch (method) {
     case 'GET':
@@ -34,7 +34,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       try {
         const plantsWithCount = await getPlantsWithCount({
           isInTrash: isInTrash === 'true' ? true : false,
-          userId: req.user
+          userId
         });
         return res.status(200).json(plantsWithCount);
       } catch (err: unknown) {
@@ -45,7 +45,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       const error = validatePlantSchema(req.body);
       if (error) return res.status(400).send({ error });
       try {
-        const newPlant = await addPlant({ ...req.body, userId: req.user });
+        const newPlant = await addPlant({ ...req.body, userId });
         res.setHeader(
           'location',
           `${req.headers.host}/api/plants/${newPlant._id}`
@@ -72,7 +72,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       try {
         const deletedCount = await deletePlantsFromTrash({
           plantIds,
-          userId: req.user,
+          userId,
           plantInTrashErrorMsg: PLANT_IN_TRASH_ERROR_MSG
         });
         return res

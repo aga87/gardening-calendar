@@ -11,7 +11,8 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
 
   const {
     query: { id },
-    method
+    method,
+    userId
   } = req;
 
   if (typeof id !== 'string')
@@ -22,7 +23,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
   switch (method) {
     case 'GET':
       try {
-        const plant = await getPlant({ plantId: id, userId: req.user });
+        const plant = await getPlant({ plantId: id, userId });
         if (!plant)
           return res
             .status(404)
@@ -40,7 +41,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
         const plant = await editPlant({
           plantId: id,
           updatedPlant: req.body,
-          userId: req.user,
+          userId,
           plantInTrashErrorMsg: PLANT_IN_TRASH_ERROR_MSG
         });
         if (!plant)

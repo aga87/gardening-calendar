@@ -10,7 +10,7 @@ export const authMiddleware =
 
     try {
       const decodedToken = await adminAuth.verifyIdToken(token); // https://firebase.google.com/docs/auth/admin/verify-id-tokens#web
-      req.user = decodedToken.uid;
+      req.userId = decodedToken.uid;
 
       return handler(req, res);
     } catch (err) {

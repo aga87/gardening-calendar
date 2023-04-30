@@ -34,90 +34,94 @@ function hasHarvestUntil(this: PlantRecord) {
 
 // Mongoose Schema
 
-const PlantSchema = new Schema<PlantRecord>({
-  name: {
-    type: String,
-    required: [true, 'Name is required.'],
-    maxLength: [
-      NAME_MAX_LENGTH,
-      `Cannot be longer than ${NAME_MAX_LENGTH} characters - {VALUE} exceeds the length limit.`
-    ],
-    trim: true
-  },
-  variety: {
-    type: String,
-    maxLength: [
-      VARIETY_MAX_LENGTH,
-      `Cannot be longer than ${VARIETY_MAX_LENGTH} characters - {VALUE} exceeds the length limit.`
-    ],
-    trim: true
-  },
-  category: {
-    type: String,
-    required: [true, 'Category is required.'],
-    lowercase: true,
-    trim: true,
-    enum: {
-      values: plantCategories,
-      message: `{VALUE} is not a valid plant category. The allowed categories are: ${plantCategories.join(
-        ', '
-      )}.`
+const PlantSchema = new Schema<PlantRecord>(
+  {
+    name: {
+      type: String,
+      required: [true, 'Name is required.'],
+      maxLength: [
+        NAME_MAX_LENGTH,
+        `Cannot be longer than ${NAME_MAX_LENGTH} characters - {VALUE} exceeds the length limit.`
+      ],
+      trim: true
+    },
+    variety: {
+      type: String,
+      maxLength: [
+        VARIETY_MAX_LENGTH,
+        `Cannot be longer than ${VARIETY_MAX_LENGTH} characters - {VALUE} exceeds the length limit.`
+      ],
+      trim: true
+    },
+    category: {
+      type: String,
+      required: [true, 'Category is required.'],
+      lowercase: true,
+      trim: true,
+      enum: {
+        values: plantCategories,
+        message: `{VALUE} is not a valid plant category. The allowed categories are: ${plantCategories.join(
+          ', '
+        )}.`
+      }
+    },
+    sowFrom: {
+      type: Number,
+      required: [
+        hasSowUntil,
+        'The starting month of the sowing season is required if the ending month of the sowing season (sowUntil) is specified.'
+      ],
+      enum: {
+        values: months,
+        message: invalidMonthMsg
+      }
+    },
+    sowUntil: {
+      type: Number,
+      required: [
+        hasSowFrom,
+        'The ending month of the sowing season is required if the starting month of the sowing season (sowFrom) is specified.'
+      ],
+      enum: {
+        values: months,
+        message: invalidMonthMsg
+      }
+    },
+    harvestFrom: {
+      type: Number,
+      required: [
+        hasHarvestUntil,
+        'The starting month of the harvesting season is required if the ending month of the harvesting season (harvestUntil) is specified.'
+      ],
+      enum: {
+        values: months,
+        message: invalidMonthMsg
+      }
+    },
+    harvestUntil: {
+      type: Number,
+      required: [
+        hasHarvestFrom,
+        'The ending month of the harvesting season is required if the starting month of the harvesting season (harvestFrom) is specified.'
+      ],
+      enum: {
+        values: months,
+        message: invalidMonthMsg
+      }
+    },
+    isInTrash: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    userId: {
+      type: String,
+      required: true
     }
   },
-  sowFrom: {
-    type: Number,
-    required: [
-      hasSowUntil,
-      'The starting month of the sowing season is required if the ending month of the sowing season (sowUntil) is specified.'
-    ],
-    enum: {
-      values: months,
-      message: invalidMonthMsg
-    }
-  },
-  sowUntil: {
-    type: Number,
-    required: [
-      hasSowFrom,
-      'The ending month of the sowing season is required if the starting month of the sowing season (sowFrom) is specified.'
-    ],
-    enum: {
-      values: months,
-      message: invalidMonthMsg
-    }
-  },
-  harvestFrom: {
-    type: Number,
-    required: [
-      hasHarvestUntil,
-      'The starting month of the harvesting season is required if the ending month of the harvesting season (harvestUntil) is specified.'
-    ],
-    enum: {
-      values: months,
-      message: invalidMonthMsg
-    }
-  },
-  harvestUntil: {
-    type: Number,
-    required: [
-      hasHarvestFrom,
-      'The ending month of the harvesting season is required if the starting month of the harvesting season (harvestFrom) is specified.'
-    ],
-    enum: {
-      values: months,
-      message: invalidMonthMsg
-    }
-  },
-  isInTrash: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  userId: {
-    type: String,
-    required: true
-  }
-});
+  // Include null fields in the response
+  { minimize: false }
+);
 
 // Model
 export const Plant = models.plant || model<PlantRecord>('plant', PlantSchema); // models.plant solves "Cannot overwrite `plant` model once compiled" error
