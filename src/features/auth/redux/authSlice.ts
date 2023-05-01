@@ -1,10 +1,5 @@
-import {
-  AnyAction,
-  createSlice,
-  PayloadAction,
-  ThunkDispatch
-} from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '@/redux/store';
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
+import { AppThunk } from '@/redux/store';
 import { AuthService } from '../services/AuthService';
 
 type User = { userEmail: string; emailVerified: boolean };
@@ -76,31 +71,30 @@ const {
   setCurrentUserLoading,
   setSignUpLoading,
   setSignInLoading,
-  setSignUpError,
-  setSignInError,
   setSignOutError,
-  setVerificationEmailSent,
   setVerificationEmailError
 } = authSlice.actions;
 
-export const subscribeToAuthStateChanges =
-  () => (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
-    const unsubscribe = AuthService.subscribeToAuthStateChanges(user => {
-      dispatch(
-        setUser(
-          user
-            ? {
-                userEmail: user.email ?? '',
-                emailVerified: user.emailVerified
-              }
-            : null
-        )
-      );
-      dispatch(setCurrentUserLoading(false));
-    });
+export const { setVerificationEmailSent, setSignInError, setSignUpError } =
+  authSlice.actions;
 
-    return unsubscribe;
-  };
+export const subscribeToAuthStateChanges = () => (dispatch: Dispatch) => {
+  const unsubscribe = AuthService.subscribeToAuthStateChanges(user => {
+    dispatch(
+      setUser(
+        user
+          ? {
+              userEmail: user.email ?? '',
+              emailVerified: user.emailVerified
+            }
+          : null
+      )
+    );
+    dispatch(setCurrentUserLoading(false));
+  });
+
+  return unsubscribe;
+};
 
 export const signUp =
   ({ email, password }: { email: string; password: string }): AppThunk =>
@@ -110,16 +104,23 @@ export const signUp =
       email,
       password
     });
-    dispatch(setVerificationEmailSent(isVerificationEmailSent));
-    dispatch(setSignUpError(error));
+    if (isVerificationEmailSent) {
+      dispatch(setVerificationEmailSent(isVerificationEmailSent));
+    } else if (error) {
+      dispatch(setSignUpError(error));
+    }
     dispatch(setSignUpLoading(false));
   };
 
 export const resendVerificationEmail = (): AppThunk => async dispatch => {
   const { isVerificationEmailSent, error } =
     await AuthService.resendVerificationEmail();
-  dispatch(setVerificationEmailSent(isVerificationEmailSent));
-  dispatch(setVerificationEmailError(error));
+  if (isVerificationEmailSent) {
+    dispatch(setVerificationEmailSent(isVerificationEmailSent));
+  } else if (error) {
+    dispatch(setVerificationEmailError(error));
+  }
+  dispatch(setSignInError(null));
 };
 
 export const signIn =
@@ -127,53 +128,33 @@ export const signIn =
   async dispatch => {
     dispatch(setSignInLoading(true));
     const { error } = await AuthService.signIn({ email, password });
-    dispatch(setSignInError(error));
+    if (error) {
+      dispatch(setSignInError(error));
+    }
     dispatch(setSignInLoading(false));
   };
 
 export const signInWithGoogle = (): AppThunk => async dispatch => {
   dispatch(setSignInLoading(true));
   const { error } = await AuthService.signInWithGoogle();
-  dispatch(setSignInError(error));
+  if (error) {
+    dispatch(setSignInError(error));
+  }
   dispatch(setSignInLoading(false));
 };
 
 export const signInWithGitHub = (): AppThunk => async dispatch => {
   dispatch(setSignInLoading(true));
   const { error } = await AuthService.signInWithGitHub();
-  dispatch(setSignInError(error));
+  if (error) {
+    dispatch(setSignInError(error));
+  }
   dispatch(setSignInLoading(false));
 };
 
 export const signOut = (): AppThunk => async dispatch => {
   const { error } = await AuthService.signOut();
-  dispatch(setSignOutError(error));
+  if (error) {
+    dispatch(setSignOutError(error));
+  }
 };
-
-// SELECTORS
-// User
-export const selectUserEmail = (state: RootState): string =>
-  state.authReducer.user?.userEmail || '';
-
-export const selectIsUserVerified = (state: RootState): boolean =>
-  state.authReducer.user?.emailVerified || false;
-
-export const selectIsCurrentUserLoading = (state: RootState): boolean =>
-  state.authReducer.isLoadingCurrentUser;
-
-// Sign up
-export const selectIsLoadingSignUp = (state: RootState): boolean =>
-  state.authReducer.isLoadingSignUp;
-
-export const selectSignUpError = (state: RootState): string | null =>
-  state.authReducer.signUpError;
-
-// Sign in
-export const selectIsLoadingSignIn = (state: RootState): boolean =>
-  state.authReducer.isLoadingSignIn;
-
-export const selectSignInError = (state: RootState): string | null =>
-  state.authReducer.signInError;
-
-export const selectIsVerificationEmailSent = (state: RootState): boolean =>
-  state.authReducer.isVerificationEmailSent;

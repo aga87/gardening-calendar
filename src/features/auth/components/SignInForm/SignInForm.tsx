@@ -32,7 +32,8 @@ export const SignInForm = () => {
     formErrors,
     handleSubmit,
     signInError,
-    handleResendVerificationEmail
+    handleResendVerificationEmail,
+    isVerificationEmailSent
   } = useSignInForm();
 
   return (
@@ -48,6 +49,15 @@ export const SignInForm = () => {
             <Button
               text='Resend verification email'
               handleClick={handleResendVerificationEmail}
+            />
+          </div>
+        )}
+        {isVerificationEmailSent && (
+          <div className={styles.alertContainer}>
+            <Alert
+              type='success'
+              variant='secondary'
+              message='Verification email has been sent. Please check your inbox (including the spam folder).'
             />
           </div>
         )}

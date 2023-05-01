@@ -13,15 +13,20 @@
 
 ## Features
 
-#### Authentication
+### Authentication
 
-Users can securely sign in to the application, backed by the robust security and reliability of Firebase Authentication. Supported methods:
+Users can securely sign up and sign in to the application using Firebase Authentication. Supported methods:
 
-- Sign up and sign in with email and password. Users are required to verify their email before signing in.
+- Sign up with email and password and receive verification email.
+- Sign in with email and password upon successful email verification.
 - Sign in with Google account.
 - Sign in with GitHub account.
 
-#### Plants API
+### Plants API (RESTful)
 
 - Authenticated users are allowed to access the Plants API routes.
 - Users can view their plant collection, add new plants, edit existing plants, move plants to trash, restore plants and delete plants.
+
+### UI / Dashboard
+
+Upcoming.

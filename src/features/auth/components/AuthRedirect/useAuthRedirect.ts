@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
 import {
   selectIsUserVerified,
-  selectIsCurrentUserLoading,
-  subscribeToAuthStateChanges
-} from '../../redux/authSlice';
+  selectIsCurrentUserLoading
+} from '../../redux/authSelectors';
+import { subscribeToAuthStateChanges } from '../../redux/authSlice';
 
 export const useAuthRedirect = () => {
   const dispatch = useAppDispatch();
