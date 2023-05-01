@@ -71,12 +71,12 @@ const {
   setCurrentUserLoading,
   setSignUpLoading,
   setSignInLoading,
-  setSignUpError,
-  setSignInError,
   setSignOutError,
-  setVerificationEmailSent,
   setVerificationEmailError
 } = authSlice.actions;
+
+export const { setVerificationEmailSent, setSignInError, setSignUpError } =
+  authSlice.actions;
 
 export const subscribeToAuthStateChanges = () => (dispatch: Dispatch) => {
   const unsubscribe = AuthService.subscribeToAuthStateChanges(user => {
@@ -104,16 +104,23 @@ export const signUp =
       email,
       password
     });
-    dispatch(setVerificationEmailSent(isVerificationEmailSent));
-    dispatch(setSignUpError(error));
+    if (isVerificationEmailSent) {
+      dispatch(setVerificationEmailSent(isVerificationEmailSent));
+    } else if (error) {
+      dispatch(setSignUpError(error));
+    }
     dispatch(setSignUpLoading(false));
   };
 
 export const resendVerificationEmail = (): AppThunk => async dispatch => {
   const { isVerificationEmailSent, error } =
     await AuthService.resendVerificationEmail();
-  dispatch(setVerificationEmailSent(isVerificationEmailSent));
-  dispatch(setVerificationEmailError(error));
+  if (isVerificationEmailSent) {
+    dispatch(setVerificationEmailSent(isVerificationEmailSent));
+  } else if (error) {
+    dispatch(setVerificationEmailError(error));
+  }
+  dispatch(setSignInError(null));
 };
 
 export const signIn =
@@ -121,25 +128,33 @@ export const signIn =
   async dispatch => {
     dispatch(setSignInLoading(true));
     const { error } = await AuthService.signIn({ email, password });
-    dispatch(setSignInError(error));
+    if (error) {
+      dispatch(setSignInError(error));
+    }
     dispatch(setSignInLoading(false));
   };
 
 export const signInWithGoogle = (): AppThunk => async dispatch => {
   dispatch(setSignInLoading(true));
   const { error } = await AuthService.signInWithGoogle();
-  dispatch(setSignInError(error));
+  if (error) {
+    dispatch(setSignInError(error));
+  }
   dispatch(setSignInLoading(false));
 };
 
 export const signInWithGitHub = (): AppThunk => async dispatch => {
   dispatch(setSignInLoading(true));
   const { error } = await AuthService.signInWithGitHub();
-  dispatch(setSignInError(error));
+  if (error) {
+    dispatch(setSignInError(error));
+  }
   dispatch(setSignInLoading(false));
 };
 
 export const signOut = (): AppThunk => async dispatch => {
   const { error } = await AuthService.signOut();
-  dispatch(setSignOutError(error));
+  if (error) {
+    dispatch(setSignOutError(error));
+  }
 };
