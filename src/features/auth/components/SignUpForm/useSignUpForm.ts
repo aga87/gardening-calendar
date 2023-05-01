@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTextInput, usePasswordStrength } from '@/components';
+import { useFirstRender } from '@/hooks';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
 import {
-  signUp,
+  setSignUpError,
+  setVerificationEmailSent,
+  signUp
+} from '../../redux/authSlice';
+import {
   selectIsVerificationEmailSent,
   selectSignUpError
-} from '../../redux/authSlice';
-import { useTextInput, usePasswordStrength } from '@/components';
+} from '../../redux/authSelectors';
 import {
   hasNonEmptyValue,
   validateRequiredField,
@@ -28,6 +33,8 @@ export const useSignUpForm = () => {
   const signUpError = useAppSelector(selectSignUpError);
   const isVerificationEmailSent = useAppSelector(selectIsVerificationEmailSent);
 
+  const isFirstRender = useFirstRender();
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,6 +51,20 @@ export const useSignUpForm = () => {
       dispatch(signUp({ email, password }));
     }
   };
+
+  // Clear sign up errors on first render if any
+  useEffect(() => {
+    if (isFirstRender && signUpError) {
+      dispatch(setSignUpError(null));
+    }
+  }, [dispatch, signUpError, isFirstRender]);
+
+  // Clear notification on first render if any
+  useEffect(() => {
+    if (isFirstRender && isVerificationEmailSent) {
+      dispatch(setVerificationEmailSent(false));
+    }
+  }, [dispatch, isVerificationEmailSent, isFirstRender]);
 
   return {
     email,

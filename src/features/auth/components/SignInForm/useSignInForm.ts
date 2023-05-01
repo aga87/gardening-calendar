@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '@/redux/typed-hooks';
+import { useFirstRender } from '@/hooks';
 import {
   signIn,
+  resendVerificationEmail,
+  setSignInError,
+  setVerificationEmailSent
+} from '../../redux/authSlice';
+import {
   selectUserEmail,
   selectSignInError,
-  resendVerificationEmail
-} from '../../redux/authSlice';
+  selectIsVerificationEmailSent
+} from '../../redux/authSelectors';
 import { useTextInput } from '@/components';
 import { hasNonEmptyValue, validateRequiredField } from '../../utils';
 
@@ -18,6 +24,10 @@ export const useSignInForm = () => {
 
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const signInError = useAppSelector(selectSignInError);
+
+  const isVerificationEmailSent = useAppSelector(selectIsVerificationEmailSent);
+
+  const isFirstRender = useFirstRender();
 
   const dispatch = useAppDispatch();
 
@@ -40,6 +50,20 @@ export const useSignInForm = () => {
     dispatch(resendVerificationEmail());
   };
 
+  // Clear sign in errors on first render if any
+  useEffect(() => {
+    if (isFirstRender && signInError) {
+      dispatch(setSignInError(null));
+    }
+  }, [dispatch, signInError, isFirstRender]);
+
+  // Clear notification on first render if any
+  useEffect(() => {
+    if (isFirstRender && isVerificationEmailSent) {
+      dispatch(setVerificationEmailSent(false));
+    }
+  }, [dispatch, isVerificationEmailSent, isFirstRender]);
+
   return {
     email,
     handleEmailChange,
@@ -48,6 +72,7 @@ export const useSignInForm = () => {
     handleSubmit,
     formErrors,
     signInError,
-    handleResendVerificationEmail
+    handleResendVerificationEmail,
+    isVerificationEmailSent
   };
 };
