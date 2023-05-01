@@ -9,7 +9,7 @@ import {
   signOut,
   User as FirebaseUser
 } from 'firebase/auth';
-import { auth } from '@/firebase';
+import { auth } from '@/libs/firebase';
 import { getErrorMessage } from '@/utils';
 
 export const AuthService = {
