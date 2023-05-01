@@ -1,4 +1,4 @@
-# Recipe Generator
+# Gardening Calendar
 
 ## Tech Stack
 
