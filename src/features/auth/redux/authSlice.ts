@@ -1,10 +1,5 @@
-import {
-  AnyAction,
-  createSlice,
-  PayloadAction,
-  ThunkDispatch
-} from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '@/redux/store';
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
+import { AppThunk } from '@/redux/store';
 import { AuthService } from '../services/AuthService';
 
 type User = { userEmail: string; emailVerified: boolean };
@@ -83,24 +78,23 @@ const {
   setVerificationEmailError
 } = authSlice.actions;
 
-export const subscribeToAuthStateChanges =
-  () => (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
-    const unsubscribe = AuthService.subscribeToAuthStateChanges(user => {
-      dispatch(
-        setUser(
-          user
-            ? {
-                userEmail: user.email ?? '',
-                emailVerified: user.emailVerified
-              }
-            : null
-        )
-      );
-      dispatch(setCurrentUserLoading(false));
-    });
+export const subscribeToAuthStateChanges = () => (dispatch: Dispatch) => {
+  const unsubscribe = AuthService.subscribeToAuthStateChanges(user => {
+    dispatch(
+      setUser(
+        user
+          ? {
+              userEmail: user.email ?? '',
+              emailVerified: user.emailVerified
+            }
+          : null
+      )
+    );
+    dispatch(setCurrentUserLoading(false));
+  });
 
-    return unsubscribe;
-  };
+  return unsubscribe;
+};
 
 export const signUp =
   ({ email, password }: { email: string; password: string }): AppThunk =>
@@ -149,31 +143,3 @@ export const signOut = (): AppThunk => async dispatch => {
   const { error } = await AuthService.signOut();
   dispatch(setSignOutError(error));
 };
-
-// SELECTORS
-// User
-export const selectUserEmail = (state: RootState): string =>
-  state.authReducer.user?.userEmail || '';
-
-export const selectIsUserVerified = (state: RootState): boolean =>
-  state.authReducer.user?.emailVerified || false;
-
-export const selectIsCurrentUserLoading = (state: RootState): boolean =>
-  state.authReducer.isLoadingCurrentUser;
-
-// Sign up
-export const selectIsLoadingSignUp = (state: RootState): boolean =>
-  state.authReducer.isLoadingSignUp;
-
-export const selectSignUpError = (state: RootState): string | null =>
-  state.authReducer.signUpError;
-
-// Sign in
-export const selectIsLoadingSignIn = (state: RootState): boolean =>
-  state.authReducer.isLoadingSignIn;
-
-export const selectSignInError = (state: RootState): string | null =>
-  state.authReducer.signInError;
-
-export const selectIsVerificationEmailSent = (state: RootState): boolean =>
-  state.authReducer.isVerificationEmailSent;

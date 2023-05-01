@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useTextInput, usePasswordStrength } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
+import { signUp } from '../../redux/authSlice';
 import {
-  signUp,
   selectIsVerificationEmailSent,
   selectSignUpError
-} from '../../redux/authSlice';
-import { useTextInput, usePasswordStrength } from '@/components';
+} from '../../redux/authSelectors';
 import {
   hasNonEmptyValue,
   validateRequiredField,

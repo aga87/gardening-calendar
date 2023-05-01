@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '@/redux/typed-hooks';
-import {
-  signIn,
-  selectUserEmail,
-  selectSignInError,
-  resendVerificationEmail
-} from '../../redux/authSlice';
+import { signIn, resendVerificationEmail } from '../../redux/authSlice';
+import { selectUserEmail, selectSignInError } from '../../redux/authSelectors';
 import { useTextInput } from '@/components';
 import { hasNonEmptyValue, validateRequiredField } from '../../utils';
 

@@ -3,7 +3,7 @@ import { useAppSelector } from '@/redux/typed-hooks';
 import {
   selectIsLoadingSignIn,
   selectIsLoadingSignUp
-} from './redux/authSlice';
+} from './redux/authSelectors';
 import { Logo, Tab, TabList, TabPanel } from '@/components';
 import {
   SignInForm,
