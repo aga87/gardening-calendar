@@ -1,7 +1,8 @@
-import { SignOut } from '@/features/auth/components';
+import React from 'react';
+import { Plants } from '@/features';
 
-const Home = () => {
-  return <SignOut />;
+const PlantsPage = () => {
+  return <Plants />;
 };
 
-export default Home;
+export default PlantsPage;

@@ -1,0 +1,9 @@
+@import '@/styles/variables/typography.module.scss';
+
+.list {
+  list-style-type: none;
+
+  &__item {
+    margin-bottom: $blh * 1.5rem;
+  }
+}
