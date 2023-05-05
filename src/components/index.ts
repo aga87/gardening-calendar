@@ -14,6 +14,7 @@ export * from './tables/BinaryTableDataRow/BinaryTableDataRow';
 export * from './tables/Table/Table';
 export * from './TabList/TabList';
 export * from './TabPanel/TabPanel';
+export * from './Tag/Tag';
 export * from './TextInput/TextInput';
 export * from './TextInput/implementations/PasswordInput';
 export * from './TextInput/implementations/usePasswordStrength';

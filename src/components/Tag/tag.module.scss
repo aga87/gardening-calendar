@@ -1,0 +1,11 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/ui.module.scss';
+
+.tag {
+  display: inline-block;
+  @include s2;
+  padding: 0 5px;
+  border: 1px solid $color-text-primary;
+  border-radius: $border-radius;
+}
