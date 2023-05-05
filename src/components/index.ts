@@ -10,6 +10,8 @@ export * from './Label/Label';
 export * from './Logo/Logo';
 export * from './ProgressBar/ProgressBar';
 export * from './Tab/Tab';
+export * from './tables/BinaryTableDataRow/BinaryTableDataRow';
+export * from './tables/Table/Table';
 export * from './TabList/TabList';
 export * from './TabPanel/TabPanel';
 export * from './TextInput/TextInput';
