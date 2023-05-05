@@ -1,0 +1,39 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+
+.nav {
+  background-color: $color-canvas-secondary;
+
+  &__list {
+    list-style-type: none;
+  }
+}
+
+.link {
+  display: flex;
+  justify-content: right;
+  @include t4;
+  text-decoration: none;
+  color: $color-text-secondary;
+  padding: $blh * 0.5rem 20px;
+
+  &:visited {
+    color: $color-text-secondary;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-ui-primary;
+    color: $color-text-secondary;
+  }
+
+  &:focus {
+    border: 2px solid $color-ui-primary;
+    outline: none;
+  }
+
+  &.link--selected {
+    background-color: $color-ui-primary;
+    color: $color-text-secondary;
+  }
+}

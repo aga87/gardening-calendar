@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch } from '@/redux/typed-hooks';
-import { Button } from '@/components';
+import { LogOutIcon, NavButton } from '@/components';
 import { signOut as logOut } from '../../redux/authSlice';
 
 export const SignOut = () => {
@@ -11,6 +11,10 @@ export const SignOut = () => {
   };
 
   return (
-    <Button variant='secondary' text='Sign out' handleClick={handleClick} />
+    <NavButton
+      text='Sign out'
+      icon={<LogOutIcon />}
+      handleClick={handleClick}
+    />
   );
 };
