@@ -8,6 +8,7 @@ export * from './icons/CheckmarkIcon';
 export * from './icons/EmailIcon';
 export * from './icons/GitHubIcon';
 export * from './icons/GoogleIcon';
+export * from './icons/HamburgerIcon';
 export * from './icons/LogOutIcon';
 export * from './icons/TrashIcon';
 export * from './Label/Label';

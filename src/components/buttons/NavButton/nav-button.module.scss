@@ -9,8 +9,7 @@
   color: $color-text-secondary;
   background-color: $color-canvas-secondary;
   padding: $blh * 0.5rem 20px;
-  border: none;
-
+  border: 2px solid $color-canvas-secondary;
 
   &:hover {
     cursor: pointer;
@@ -19,8 +18,13 @@
   }
 
   &:focus {
-    border: 2px solid $color-ui-primary;
+    border-color: $color-ui-primary;
     outline: none;
+  }
+
+  &.button--icon {
+    width: auto;
+    padding: $blh * 0.25rem 20px;
   }
 
   &__icon {
