@@ -1,0 +1,19 @@
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.one,
+.zero {
+  height: $blh * 0.5rem;
+}
+
+.zero {
+  background-color: $color-ui-tertiary;
+}
+
+.one {
+  background-color: $color-ui-primary;
+
+  &.one--secondary {
+    background-color: $color-ui-secondary;
+  }
+}

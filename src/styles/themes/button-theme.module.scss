@@ -2,7 +2,7 @@
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/ui.module.scss';
 
-.button {
+@mixin button {
   display: inline-block;
   width: 100%;
   font-family: inherit;
@@ -18,7 +18,6 @@
   &:hover {
     cursor: pointer;
     font-weight: bold;
-  
   }
 
   &:focus {
@@ -30,25 +29,5 @@
     color: $color-ui-primary;
     background-color: $color-canvas-primary;
     border-color: $color-ui-primary;
-  }
-
-  &.button--secondary {
-    color: $color-text-tertiary;
-    background-color: $color-canvas-secondary-dim;
-    border-color: $color-canvas-secondary-dim;
-
-    &:focus {
-      border: 2px solid $color-text-tertiary;
-      outline: none;
-    }
-
-    &:active {
-      background-color: $color-canvas-primary;
-    }
-  }
-
-  &__icon {
-    position: absolute;
-    left: 0.5rem * $blh;
   }
 }

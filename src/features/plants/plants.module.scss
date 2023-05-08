@@ -1,0 +1,39 @@
+@import '@/styles/helpers/responsive-breakpoints.module.scss';
+@import '@/styles/variables/breakpoints.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/magic-numbers.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.list {
+  list-style-type: none;
+
+  &__item {
+    margin-bottom: $blh * 1.5rem;
+    cursor: pointer;
+  }
+}
+
+.plantsMenu {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: $color-canvas-primary;
+  border-top: 2px solid $color-canvas-secondary;
+
+  @include screen-min($xs-breakpoint) {
+    left: $sidebar-width;
+  }
+
+  &__item {
+    $sort-width: 200px;
+    width: $sort-width;
+    margin: 0 auto;
+
+    @include screen-min($xs-breakpoint) {
+      margin-right: calc(((100% - $sidebar-width) / 2) + ($sort-width / 2));
+    }
+  }
+}

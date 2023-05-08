@@ -1,0 +1,25 @@
+@import '@/styles/themes/button-theme.module.scss';
+
+.button {
+  @include button;
+
+  &.button--secondary {
+    color: $color-text-tertiary;
+    background-color: $color-canvas-secondary-dim;
+    border-color: $color-canvas-secondary-dim;
+
+    &:focus {
+      border: 2px solid $color-text-tertiary;
+      outline: none;
+    }
+
+    &:active {
+      background-color: $color-canvas-primary;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    left: 0.5rem * $blh;
+  }
+}
