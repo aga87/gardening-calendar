@@ -7,7 +7,7 @@ import {
   Navigation as NavigationComponent,
   TrashIcon
 } from '@/components';
-import { useSignOut } from '../auth/components';
+import { useSignOut } from '../auth/hooks';
 import styles from './navigation.module.scss';
 
 export const Navigation = () => {
