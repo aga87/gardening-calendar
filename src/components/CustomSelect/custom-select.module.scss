@@ -1,0 +1,77 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.select {
+  position: relative;
+}
+
+.options {
+  $border-radius: 4px;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border: 2px solid $color-canvas-secondary;
+  border-bottom: 2px solid $color-canvas-primary;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+.option,
+.selected {
+  @include s2;
+  text-align: center;
+  padding: $blh * 0.25rem 15px $blh * 0.25rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.selected {
+  &:focus {
+    outline: none;
+    border: 2px solid $color-ui-primary;
+    border-top: none;
+  }
+
+  &__text {
+    display: inline-block;
+    position: relative;
+
+    &:after {
+      // the arrow
+      position: absolute;
+      content: '';
+      top: 3px;
+      right: -20px;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      border-bottom-color: $color-text-primary;
+    }
+
+    &.selected__text--isOpen {
+      &:after {
+        // point the arrow downwards
+        border-color: $color-text-primary transparent transparent transparent;
+        top: 11px;
+      }
+    }
+  }
+}
+
+.option {
+  background-color: $color-ui-tertiary;
+  border: 1px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: $color-ui-primary;
+  }
+
+  &:focus {
+    outline: none;
+    border: 2px solid $color-ui-primary;
+  }
+}

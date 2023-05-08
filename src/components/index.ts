@@ -2,6 +2,8 @@ export * from './Alert/Alert';
 export * from './buttons/Button/Button';
 export * from './buttons/NavButton/NavButton';
 export * from './buttons/SubmitButton/SubmitButton';
+export * from './CustomSelect/CustomSelect';
+export * from './CustomSelect/useCustomSelect';
 export * from './Form/Form';
 export * from './icons/AddIcon';
 export * from './icons/CheckmarkIcon';

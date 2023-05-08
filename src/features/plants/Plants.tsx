@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { CustomSelect, useCustomSelect } from '@/components';
 import { PlantChart, PlantDescription } from './components';
 import { plants } from './data/mock-plants-data';
 import type { Plant, PlantCategory } from './types';
@@ -11,6 +12,10 @@ type PlantsProps = {
 
 export const Plants = ({ category }: PlantsProps) => {
   const router = useRouter();
+
+  const sortOptions = ['name', 'sowing time', 'harvesting time'];
+  const sort = useCustomSelect(sortOptions[0]);
+  // TODO: sort plants
 
   const filteredPlants =
     category === 'all'
@@ -43,5 +48,19 @@ export const Plants = ({ category }: PlantsProps) => {
     );
   });
 
-  return <ul className={styles.list}>{plantListItems}</ul>;
+  return (
+    <>
+      <ul className={styles.list}>{plantListItems}</ul>
+      <div role='menu' className={styles.plantsMenu}>
+        <div className={styles.plantsMenu__item}>
+          <CustomSelect
+            label='Sort by:'
+            options={sortOptions}
+            value={sort.value}
+            handleChange={sort.handleChange}
+          />
+        </div>
+      </div>
+    </>
+  );
 };
