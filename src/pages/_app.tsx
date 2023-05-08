@@ -8,7 +8,7 @@ import { store } from '@/redux/store';
 import { AuthRedirect } from '@/features/auth/components';
 
 const roboto = Roboto({
-  weight: '400',
+  weight: ['400', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin']
 });
