@@ -1,0 +1,7 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.heading {
+  @include t4;
+  padding-bottom: $blh * 1rem;
+}

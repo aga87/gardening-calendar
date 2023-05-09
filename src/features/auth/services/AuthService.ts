@@ -12,6 +12,7 @@ import {
 import { auth } from '@/libs/firebase';
 import { getErrorMessage } from '@/utils';
 
+// Firebase Auth reference: https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth
 export const AuthService = {
   subscribeToAuthStateChanges: (
     callback: (user: FirebaseUser | null) => void
@@ -100,4 +101,14 @@ export const AuthService = {
   }
 };
 
-// Firebase Auth reference: https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth
+export const getAuthToken = async () => {
+  // https://firebase.google.com/docs/auth/admin/verify-id-tokens#web
+  try {
+    const authToken = await auth.currentUser?.getIdToken(
+      /* forceRefresh */ true
+    );
+    return { authToken };
+  } catch (err: unknown) {
+    return { error: getErrorMessage(err) };
+  }
+};

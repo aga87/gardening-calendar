@@ -9,6 +9,7 @@ export * from './forms/TextInput/TextInput';
 export * from './forms/TextInput/useTextInput';
 export * from './forms/TextInput/implementations/PasswordInput';
 export * from './forms/TextInput/implementations/usePasswordStrength';
+export * from './Heading/Heading';
 export * from './icons/AddIcon';
 export * from './icons/CheckmarkIcon';
 export * from './icons/EmailIcon';

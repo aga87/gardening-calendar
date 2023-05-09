@@ -27,3 +27,8 @@ export type Plant = {
   harvestUntil: Month | null;
   userId: string;
 };
+
+export type PlantsWithCount = {
+  plants: Plant[];
+  count: number;
+};
