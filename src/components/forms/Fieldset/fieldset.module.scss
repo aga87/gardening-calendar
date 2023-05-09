@@ -1,0 +1,11 @@
+@import '@/styles/variables/typography.module.scss';
+
+.fieldset {
+  border: none;
+  padding: 0;
+
+  &__legend {
+    font-weight: bold;
+    margin-bottom: $blh * 0.25rem;
+  }
+}
