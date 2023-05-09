@@ -1,7 +1,7 @@
 import { createApiInstance } from '@/libs/axios';
-import { getAuthToken } from '@/features/auth/services/AuthService';
+import { getAuthToken } from '@/features/auth';
 import { getErrorMessage } from '@/utils';
-import type { Plant, PlantsWithCount } from '../types';
+import type { PlantsWithCount } from '../types';
 
 const getApiInstance = async () => {
   const { authToken } = await getAuthToken();

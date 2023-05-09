@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { HamburgerIcon, Logo, NavButton } from '@/components';
-import { Navigation } from '@/features';
+import { Navigation } from '@/features/navigation';
 import { useOnClickOutside } from '@/hooks';
 import styles from './layout.module.scss';
 

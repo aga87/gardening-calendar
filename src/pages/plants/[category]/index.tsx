@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Plants } from '@/features';
+import { Plants } from '@/features/plants';
 import { useRouter } from 'next/router';
 import { Layout } from '@/layout';
 import type { PlantCategory } from '@/features/plants/types';

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Plants } from '@/features';
+import { Plants } from '@/features/plants';
 import { Layout } from '@/layout';
 
 const PlantsPage = () => {

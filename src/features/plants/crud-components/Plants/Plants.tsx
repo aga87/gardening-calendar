@@ -7,10 +7,10 @@ import {
   useCustomSelect,
   Logo
 } from '@/components';
-import { PlantChart, PlantDescription } from './components';
+import { PlantChart, PlantDescription } from '../../components';
 import { useFetchPlants } from './useFetchPlants';
-import { sortPlants } from './utils/sortPlants';
-import type { Plant, PlantCategory, Sort } from './types';
+import { sortPlants } from '../../utils/sortPlants';
+import type { Plant, PlantCategory, Sort } from '../../types';
 import styles from './plants.module.scss';
 
 type PlantsProps = {
