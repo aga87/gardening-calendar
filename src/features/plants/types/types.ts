@@ -32,3 +32,5 @@ export type PlantsWithCount = {
   plants: Plant[];
   count: number;
 };
+
+export type Sort = 'name' | 'sowing time' | 'harvesting time';

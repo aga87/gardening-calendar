@@ -9,7 +9,8 @@ import {
 } from '@/components';
 import { PlantChart, PlantDescription } from './components';
 import { useFetchPlants } from './useFetchPlants';
-import type { Plant, PlantCategory } from './types';
+import { sortPlants } from './utils/sortPlants';
+import type { Plant, PlantCategory, Sort } from './types';
 import styles from './plants.module.scss';
 
 type PlantsProps = {
@@ -19,23 +20,25 @@ type PlantsProps = {
 export const Plants = ({ category }: PlantsProps) => {
   const { plants, isLoading, error } = useFetchPlants();
 
+  // Routing
   const router = useRouter();
 
   const handleClick = (plantCategory: PlantCategory, plantId: Plant['_id']) => {
     router.push(`/plants/${plantCategory}/${plantId}`);
   };
 
-  const sortOptions = ['name', 'sowing time', 'harvesting time'];
-
-  const sort = useCustomSelect(sortOptions[0]);
-  // TODO: sort plants
-
+  // Filtering
   const filteredPlants =
     category === 'plants'
       ? plants
       : plants.filter(plant => plant.category === category);
 
-  const plantListItems = filteredPlants.map(plant => {
+  // Sorting
+  const sortOptions: Sort[] = ['name', 'sowing time', 'harvesting time'];
+  const sort = useCustomSelect(sortOptions[0]);
+  const sortedPlants = sortPlants(filteredPlants, sort.value as Sort);
+
+  const plantListItems = sortedPlants.map(plant => {
     return (
       <li
         key={plant._id}
@@ -73,7 +76,7 @@ export const Plants = ({ category }: PlantsProps) => {
           <CustomSelect
             label='Sort by:'
             options={sortOptions}
-            value={sort.value}
+            value={sort.value as Sort}
             handleChange={sort.handleChange}
           />
         </div>
