@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { Plants } from '@/features';
+import { Plants } from '@/features/plants';
 import { Layout } from '@/layout';
 
 const PlantsPage = () => {
-  return <Plants category='all' />;
+  return <Plants category='plants' />;
 };
 
 PlantsPage.getLayout = function getLayout(page: ReactElement) {

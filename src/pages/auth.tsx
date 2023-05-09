@@ -1,4 +1,4 @@
-import { Auth } from '@/features';
+import { Auth } from '@/features/auth';
 import styles from '@/styles/pages/auth-page.module.scss';
 
 const AuthPage = () => {
