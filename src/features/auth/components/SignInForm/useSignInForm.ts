@@ -13,7 +13,7 @@ import {
   selectIsVerificationEmailSent
 } from '../../redux/authSelectors';
 import { useTextInput } from '@/components';
-import { hasNonEmptyValue, validateRequiredField } from '../../utils';
+import { hasNonEmptyValue, validateRequiredField } from '@/utils';
 
 export const useSignInForm = () => {
   const userEmail = useAppSelector(selectUserEmail);

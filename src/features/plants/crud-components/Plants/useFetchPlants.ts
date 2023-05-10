@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
-import { getPlants } from '../../redux/thunks';
+import { getPlants } from '../../redux/plants/thunks';
 import {
   selectIsLoadingPlants,
   selectPlants,
   selectPlantsError
-} from '../../redux/selectors';
+} from '../../redux/plants/selectors';
 
 export const useFetchPlants = () => {
   const dispatch = useAppDispatch();

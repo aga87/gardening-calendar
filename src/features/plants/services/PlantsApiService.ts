@@ -1,7 +1,6 @@
-import { createApiInstance } from '@/libs/axios';
+import { createApiInstance, getError } from '@/libs/axios';
 import { getAuthToken } from '@/features/auth';
-import { getErrorMessage } from '@/utils';
-import type { PlantsWithCount } from '../types';
+import type { NewPlant, Plant, PlantsWithCount } from '../types';
 
 const getApiInstance = async () => {
   const { authToken } = await getAuthToken();
@@ -22,7 +21,17 @@ export const PlantsApiService = {
       const plantsWithCount: PlantsWithCount = res.data;
       return { plantsWithCount, error: null };
     } catch (err: unknown) {
-      return { plantsWithCount: null, error: getErrorMessage(err) };
+      return { plantsWithCount: null, error: getError(err) };
+    }
+  },
+  addPlant: async (newPlant: NewPlant) => {
+    try {
+      const apiInstance = await getApiInstance();
+      const res = await apiInstance.post('/api/plants', newPlant);
+      const plant: Plant = res.data;
+      return { plant, error: null };
+    } catch (err: unknown) {
+      return { plant: null, error: getError(err) };
     }
   }
 };

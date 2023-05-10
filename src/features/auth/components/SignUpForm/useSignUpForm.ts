@@ -11,11 +11,8 @@ import {
   selectIsVerificationEmailSent,
   selectSignUpError
 } from '../../redux/authSelectors';
-import {
-  hasNonEmptyValue,
-  validateRequiredField,
-  validateNewPasswordField
-} from '../../utils';
+import { validateNewPasswordField } from '../../utils';
+import { hasNonEmptyValue, validateRequiredField } from '@/utils';
 
 export const useSignUpForm = () => {
   const { value: email, handleChange: handleEmailChange } = useTextInput('');

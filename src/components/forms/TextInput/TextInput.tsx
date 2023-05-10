@@ -2,12 +2,14 @@ import React, { useId } from 'react';
 import styles from './input.module.scss';
 
 type TextInputProps = {
-  inputId: string;
+  variant: 'primary' | 'secondary';
+  id: string;
   value: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: 'text' | 'email' | 'password';
   placeholder?: string;
   required?: boolean;
+  maxLength?: number;
   errorMsg?: string;
   icon?: React.ReactNode;
 };
@@ -15,12 +17,14 @@ type TextInputProps = {
 export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
-      inputId,
+      variant,
+      id,
       value,
       handleChange,
       type = 'text',
       placeholder = '',
       required = true,
+      maxLength,
       errorMsg = '',
       icon = null
     },
@@ -29,6 +33,11 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const errorId = useId();
 
     let inputContainerClassName = styles.inputContainer;
+    let inputClassName = styles.input;
+    if (variant === 'secondary') {
+      inputContainerClassName = `${inputContainerClassName} ${styles['inputContainer--secondary']}`;
+      inputClassName = `${inputClassName} ${styles['input--secondary']}`;
+    }
     if (errorMsg) {
       inputContainerClassName = `${inputContainerClassName} ${styles['inputContainer--error']}`;
     }
@@ -38,13 +47,14 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         <div className={inputContainerClassName}>
           <input
             ref={ref}
-            className={styles.input}
-            id={inputId}
+            className={inputClassName}
+            id={id}
             placeholder={placeholder}
             type={type}
             size={30}
             value={value}
             onChange={handleChange}
+            maxLength={maxLength}
             required={required}
             aria-describedby={errorMsg && errorId}
             aria-invalid={errorMsg !== ''}

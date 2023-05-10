@@ -5,7 +5,7 @@ import { TextInput } from '../TextInput';
 import styles from './password-input.module.scss';
 
 type PasswordInputProps = {
-  inputId: string;
+  id: string;
   value: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -19,7 +19,7 @@ export const PasswordInput = React.forwardRef<
 >(
   (
     {
-      inputId,
+      id,
       value,
       handleChange,
       placeholder = '',
@@ -56,8 +56,9 @@ export const PasswordInput = React.forwardRef<
 
     return (
       <TextInput
+        variant='secondary'
         ref={ref}
-        inputId={inputId}
+        id={id}
         value={value}
         handleChange={handleChange}
         type={passwordType}

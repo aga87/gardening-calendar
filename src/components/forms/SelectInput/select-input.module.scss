@@ -1,0 +1,38 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/ui.module.scss';
+
+.container {
+  margin-bottom: 0.5rem * $blh;
+}
+
+.select {
+  width: 100%;
+  background-color: $color-canvas-primary;
+  appearance: none;
+  background-image: url('./caret-down-solid.svg');
+  background-repeat: no-repeat;
+  background-size: 9px;
+  background-position: calc(100% - 10px) 55%;
+  padding: 0 0.5rem * $blh;
+  height: 36px; // magic number based on text input height
+  cursor: context-menu;
+  border: none;
+  border-bottom: 1px solid $color-canvas-secondary-dim;
+
+  &:focus {
+    outline: none;
+    border-color: $color-ui-primary;
+  }
+
+  &.select--error {
+    border-color: $color-ui-danger;
+  }
+
+  &__error {
+    @include s2;
+    color: $color-ui-danger;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+}

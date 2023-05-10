@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Layout } from '@/layout';
+import { NewPlant } from '@/features/plants';
 
 const NewPlantPage = () => {
-  return <h1>New Plant</h1>;
+  return <NewPlant />;
 };
 
 NewPlantPage.getLayout = function getLayout(page: ReactElement) {

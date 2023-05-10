@@ -58,13 +58,14 @@ export const SignUpForm = () => {
         )}
         <Label text={labels.email} inputId={labels.emailId} hidden />
         <TextInput
+          variant='secondary'
           ref={firstInputRef}
           type='email'
           placeholder={labels.email}
           icon={<EmailIcon className={styles.inputIcon} />}
           value={email}
           handleChange={handleEmailChange}
-          inputId={labels.emailId}
+          id={labels.emailId}
           errorMsg={formErrors.email}
         />
         <Label text={labels.password} inputId={labels.passwordId} hidden />
@@ -72,7 +73,7 @@ export const SignUpForm = () => {
           placeholder={labels.password}
           value={password}
           handleChange={handlePasswordChange}
-          inputId={labels.passwordId}
+          id={labels.passwordId}
           errorMsg={formErrors.password}
         />
         {password && !isVerificationEmailSent && (

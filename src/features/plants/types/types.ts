@@ -28,6 +28,8 @@ export type Plant = {
   userId: string;
 };
 
+export type NewPlant = Omit<Plant, '_id' | 'userId'>;
+
 export type PlantsWithCount = {
   plants: Plant[];
   count: number;
