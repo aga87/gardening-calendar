@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Plant, PlantsWithCount } from '../types';
+import type { Plant, PlantsWithCount } from '../../types';
 
 const initialState = {
   plants: [] as Plant[],

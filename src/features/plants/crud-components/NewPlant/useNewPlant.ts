@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useSelectInput, useTextInput } from '@/components';
 import { useFirstRender } from '@/hooks';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
-import { addNewPlant } from '../../redux/thunks';
-import { setNewPlantError } from '../../redux/plantsSlice';
 import { hasNonEmptyValue, validateRequiredField } from '@/utils';
+import { addNewPlant } from '../../redux/plants/thunks';
+import { setNewPlantError } from '../../redux/plants/plantsSlice';
+import { useRedirect } from '../../hooks';
 import {
   plantCategories,
   validateEndingMonthField,
@@ -14,7 +15,7 @@ import { PlantCategory, Month, NewPlant } from '../../types';
 import {
   selectIsLoadingNewPlant,
   selectNewPlantError
-} from '../../redux/selectors';
+} from '../../redux/plants/selectors';
 
 export const useNewPlant = () => {
   const name = useTextInput('');
@@ -83,6 +84,9 @@ export const useNewPlant = () => {
       dispatch(setNewPlantError(null));
     }
   }, [dispatch, error, isFirstRender]);
+
+  // Redirect upon successful plant creation
+  useRedirect();
 
   return {
     name,

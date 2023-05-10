@@ -1,5 +1,5 @@
 import type { RootState } from '@/redux/store';
-import type { Plant } from '../types';
+import type { Plant } from '../../types';
 
 // GET
 export const selectPlants = (state: RootState): Plant[] =>

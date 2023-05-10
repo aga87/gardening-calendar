@@ -1,5 +1,5 @@
 import { AppThunk } from '@/redux/store';
-import { PlantsApiService } from '../services';
+import { PlantsApiService } from '../../services';
 import {
   setPlants,
   setPlantsLoading,
@@ -8,7 +8,8 @@ import {
   setNewPlantLoading,
   setNewPlantError
 } from './plantsSlice';
-import type { NewPlant } from '../types';
+import { setRedirectLink } from '../redirect/redirectSlice';
+import type { NewPlant } from '../../types';
 
 export const getPlants = (): AppThunk => async dispatch => {
   dispatch(setPlantsLoading(true));
@@ -28,6 +29,7 @@ export const addNewPlant =
     const { plant, error } = await PlantsApiService.addPlant(newPlant);
     if (plant) {
       dispatch(setNewPlant(plant));
+      dispatch(setRedirectLink(`/plants/${plant.category}/${plant._id}`));
     } else if (error) {
       dispatch(setNewPlantError(error));
     }
