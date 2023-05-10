@@ -9,6 +9,7 @@ type TextInputProps = {
   type?: 'text' | 'email' | 'password';
   placeholder?: string;
   required?: boolean;
+  maxLength?: number;
   errorMsg?: string;
   icon?: React.ReactNode;
 };
@@ -23,6 +24,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = 'text',
       placeholder = '',
       required = true,
+      maxLength,
       errorMsg = '',
       icon = null
     },
@@ -52,6 +54,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             size={30}
             value={value}
             onChange={handleChange}
+            maxLength={maxLength}
             required={required}
             aria-describedby={errorMsg && errorId}
             aria-invalid={errorMsg !== ''}

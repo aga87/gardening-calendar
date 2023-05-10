@@ -1,26 +1,33 @@
 import React, { useId } from 'react';
 import {
+  Alert,
   Fieldset,
   Form,
   Heading,
   Label,
+  Logo,
   SelectInput,
   SubmitButton,
-  TextInput,
-  useSelectInput,
-  useTextInput
+  TextInput
 } from '@/components';
+import { useNewPlant } from './useNewPlant';
 import { months, plantCategories } from '../../utils';
 import styles from './new-plant.module.scss';
 
 export const NewPlant = () => {
-  const name = useTextInput('');
-  const variety = useTextInput('');
-  const category = useSelectInput(plantCategories[0]);
-  const sowFrom = useSelectInput('');
-  const sowUntil = useSelectInput('');
-  const harvestFrom = useSelectInput('');
-  const harvestUntil = useSelectInput('');
+  const {
+    name,
+    variety,
+    category,
+    sowFrom,
+    sowUntil,
+    harvestFrom,
+    harvestUntil,
+    formErrors,
+    handleSubmit,
+    isLoading,
+    error
+  } = useNewPlant();
 
   const nameInputId = useId();
   const varietyInputId = useId();
@@ -39,7 +46,17 @@ export const NewPlant = () => {
   return (
     <>
       <Heading text='New Plant' />
-      <Form>
+      {error && (
+        <div className={styles.error}>
+          <Alert type='error' message={error} />
+        </div>
+      )}
+      {isLoading && (
+        <div className={styles.loader}>
+          <Logo spin />
+        </div>
+      )}
+      <Form handleSubmit={handleSubmit}>
         <Label inputId={nameInputId} text='Name' />
         <TextInput
           variant='primary'
@@ -47,7 +64,8 @@ export const NewPlant = () => {
           value={name.value}
           handleChange={name.handleChange}
           required
-          errorMsg='' // TODO:
+          maxLength={20}
+          errorMsg={formErrors.name}
         />
         <Label inputId={varietyInputId} text='Variety' />
         <TextInput
@@ -55,6 +73,7 @@ export const NewPlant = () => {
           id={varietyInputId}
           value={variety.value}
           handleChange={variety.handleChange}
+          maxLength={30}
         />
         <Label inputId={categoryInputId} text='Category' />
         <SelectInput
@@ -75,7 +94,7 @@ export const NewPlant = () => {
                 value={sowFrom.value}
                 handleChange={sowFrom.handleChange}
                 required={sowUntil.value !== ''}
-                errorMsg='' // TODO:
+                errorMsg={formErrors.sowFrom}
               />
             </div>
             <div className={styles.container__item}>
@@ -87,7 +106,7 @@ export const NewPlant = () => {
                 value={sowUntil.value}
                 handleChange={sowUntil.handleChange}
                 required={sowFrom.value !== ''}
-                errorMsg='' // TODO:
+                errorMsg={formErrors.sowUntil}
               />
             </div>
           </div>
@@ -103,7 +122,7 @@ export const NewPlant = () => {
                 value={harvestFrom.value}
                 handleChange={harvestFrom.handleChange}
                 required={harvestUntil.value !== ''}
-                errorMsg='' // TODO:
+                errorMsg={formErrors.harvestFrom}
               />
             </div>
             <div className={styles.container__item}>
@@ -115,7 +134,7 @@ export const NewPlant = () => {
                 value={harvestUntil.value}
                 handleChange={harvestUntil.handleChange}
                 required={harvestFrom.value !== ''}
-                errorMsg='' // TODO:
+                errorMsg={formErrors.harvestUntil}
               />
             </div>
           </div>

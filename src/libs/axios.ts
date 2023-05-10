@@ -13,3 +13,9 @@ export const createApiInstance = (
     headers
   });
 };
+
+export const getError = (err: unknown) => {
+  if (axios.isAxiosError(err) && err.response) return err.response.data.error; // we are returning an error object from the API
+  if (err instanceof Error) return err.message;
+  return 'Unknown server error';
+};

@@ -1,6 +1,15 @@
 @import '@/styles/helpers/responsive-breakpoints.module.scss';
 @import '@/styles/variables/typography.module.scss';
 
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  margin-bottom: $blh * 1rem;
+}
+
 .container {
   $xs-breakpoint: 350px;
   $margin: 10px;
