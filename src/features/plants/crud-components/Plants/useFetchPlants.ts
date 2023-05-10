@@ -14,11 +14,8 @@ export const useFetchPlants = () => {
   const error = useAppSelector(selectPlantsError);
 
   useEffect(() => {
-    // Fetch data only if it is not already in Redux store
-    if (plants.length === 0) {
-      dispatch(getPlants());
-    }
-  }, [dispatch, plants]);
+    dispatch(getPlants());
+  }, [dispatch]);
 
   return { plants, isLoading, error };
 };

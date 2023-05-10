@@ -11,7 +11,11 @@ import {
 import { setRedirectLink } from '../redirect/redirectSlice';
 import type { NewPlant } from '../../types';
 
-export const getPlants = (): AppThunk => async dispatch => {
+export const getPlants = (): AppThunk => async (dispatch, getState) => {
+  // If the plants are already in Redux store, do not fetch
+  const plantsInStore = getState().plantsReducer.plants;
+  if (plantsInStore.length > 0) return;
+  // Fetch plants only if they are not already in store
   dispatch(setPlantsLoading(true));
   const { plantsWithCount, error } = await PlantsApiService.getPlants();
   if (plantsWithCount) {
