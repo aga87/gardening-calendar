@@ -1,12 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Plant, PlantsWithCount } from '../../types';
+import type { Plant, PlantDetail, PlantsWithCount } from '../../types';
 
 const initialState = {
+  // Plants
   plants: [] as Plant[],
   isLoadingPlants: false,
   plantsError: null as null | string,
+  // New plant
   isLoadingNewPlant: false,
-  newPlantError: null as null | string[]
+  newPlantError: null as null | string[],
+  // Plant details
+  plantDetails: [] as PlantDetail[],
+  isLoadingPlantDetail: false,
+  plantDetailError: null as null | string
 };
 
 export const plantsSlice = createSlice({
@@ -39,6 +45,19 @@ export const plantsSlice = createSlice({
     setNewPlantError: (state, action: PayloadAction<string[] | null>) => ({
       ...state,
       newPlantError: action.payload
+    }),
+    // GET plant detail
+    setPlantDetail: (state, action: PayloadAction<PlantDetail>) => ({
+      ...state,
+      plantDetails: [...state.plantDetails, action.payload]
+    }),
+    setPlantDetailLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingPlantDetail: action.payload
+    }),
+    setPlantDetailError: (state, action: PayloadAction<string | null>) => ({
+      ...state,
+      plantDetailError: action.payload
     })
   }
 });
@@ -46,10 +65,16 @@ export const plantsSlice = createSlice({
 export default plantsSlice.reducer;
 
 export const {
+  // Plants
   setPlants,
   setPlantsLoading,
   setPlantsError,
+  // New plant
   setNewPlant,
   setNewPlantLoading,
-  setNewPlantError
+  setNewPlantError,
+  // Plant detail
+  setPlantDetail,
+  setPlantDetailLoading,
+  setPlantDetailError
 } = plantsSlice.actions;
