@@ -1,5 +1,5 @@
 import { connectToDB } from '@/api/libs/db';
-import { editPlant, getPlant } from '@/api/services/plant-data.service';
+import { editPlant, getPlantDetail } from '@/api/services/plant-data.service';
 import { validatePlantSchema } from '@/api/models/Plant';
 import { authMiddleware, errMiddleware } from '@/api/middleware';
 import { toObjectId } from '@/api/utils';
@@ -28,7 +28,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
   switch (method) {
     case 'GET':
       try {
-        const plant = await getPlant({
+        const plant = await getPlantDetail({
           plantId,
           userId
         });
@@ -43,7 +43,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       break;
     case 'PATCH':
       const PLANT_IN_TRASH_ERROR_MSG = 'Cannot edit a plant that is in trash.';
-      const error = validatePlantSchema(req.body);
+      const error = validatePlantSchema({ plant: req.body, isEditing: true });
       if (error) return res.status(400).send({ error });
       try {
         const plant = await editPlant({

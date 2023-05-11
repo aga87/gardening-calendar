@@ -44,7 +44,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       }
       break;
     case 'POST':
-      const error = validatePlantSchema(req.body);
+      const error = validatePlantSchema({ plant: req.body, isEditing: false });
       if (error) return res.status(400).send({ error });
       try {
         const newPlant = await addPlant({ ...req.body, userId });

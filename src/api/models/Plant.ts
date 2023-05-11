@@ -15,6 +15,7 @@ const invalidMonthMsg = `{VALUE} is not a valid month. Valid months are 1-12.`;
 
 const NAME_MAX_LENGTH = 20;
 const VARIETY_MAX_LENGTH = 30;
+const NOTES_MAX_LENGTH = 1000;
 
 function hasSowFrom(this: PlantRecord) {
   return this.sowFrom !== null;
@@ -109,6 +110,15 @@ const PlantSchema = new Schema<PlantRecord>(
         message: invalidMonthMsg
       }
     },
+    notes: {
+      type: String,
+      default: null,
+      maxLength: [
+        NOTES_MAX_LENGTH,
+        `Cannot be longer than ${NOTES_MAX_LENGTH} characters - {VALUE} exceeds the length limit.`
+      ],
+      trim: true
+    },
     isInTrash: {
       type: Boolean,
       required: true,
@@ -128,10 +138,16 @@ export const Plant = models.plant || model<PlantRecord>('plant', PlantSchema); /
 
 // Pre-save validators
 
-export const validatePlantSchema = (plant: unknown): null | string[] => {
+export const validatePlantSchema = ({
+  plant,
+  isEditing
+}: {
+  plant: unknown;
+  isEditing: boolean;
+}): null | string[] => {
   const JoiMonth = Joi.number().integer().min(1).max(12);
 
-  const plantSchema = Joi.object({
+  const basePlantSchema = Joi.object({
     name: Joi.string().trim().max(NAME_MAX_LENGTH).required(),
     variety: Joi.string().allow(null).trim().max(VARIETY_MAX_LENGTH).required(),
     category: Joi.string()
@@ -150,6 +166,12 @@ export const validatePlantSchema = (plant: unknown): null | string[] => {
       otherwise: Joi.valid(null)
     }).required()
   });
+
+  const editPlantSchema = basePlantSchema.keys({
+    notes: Joi.string().allow(null).trim().max(NOTES_MAX_LENGTH).required()
+  });
+
+  const plantSchema = isEditing ? editPlantSchema : basePlantSchema;
 
   const { error } = plantSchema.validate(
     plant,
