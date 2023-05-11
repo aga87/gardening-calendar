@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { Plant } from '../models/Plant';
 import type { PlantRecord, PlantRes, PlantsWithCountRes } from '../types';
 
@@ -21,7 +22,7 @@ export const deletePlantsFromTrash = async ({
   userId,
   plantInTrashErrorMsg
 }: {
-  plantIds: string[];
+  plantIds: Types.ObjectId[];
   userId: string;
   plantInTrashErrorMsg: string;
 }): Promise<number> => {
@@ -46,7 +47,7 @@ export const editPlant = async ({
   userId,
   plantInTrashErrorMsg
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   updatedPlant: Omit<PlantRes, '_id' | 'isInTrash'>;
   userId: string;
   plantInTrashErrorMsg: string;
@@ -77,14 +78,13 @@ export const getPlant = async ({
   plantId,
   userId
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   userId: string;
 }): Promise<PlantRes | null> => {
-  const plant: PlantRes | null = await Plant.findOne({
+  return await Plant.findOne({
     _id: plantId,
     userId
   }).select(select);
-  return plant;
 };
 
 export const getPlantsWithCount = async ({
@@ -108,11 +108,11 @@ export const updatePlantTrashStatus = async ({
   isInTrash,
   userId
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   isInTrash: boolean;
   userId: string;
-}) => {
-  const plant: PlantRes | null = await Plant.findOneAndUpdate(
+}): Promise<PlantRes | null> => {
+  return await Plant.findOneAndUpdate(
     { _id: plantId, userId },
     { $set: { isInTrash } },
     {
@@ -120,5 +120,4 @@ export const updatePlantTrashStatus = async ({
       runValidators: true
     }
   ).select(select);
-  return plant;
 };

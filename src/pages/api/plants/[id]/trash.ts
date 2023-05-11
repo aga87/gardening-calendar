@@ -2,6 +2,7 @@ import { connectToDB } from '@/api/libs/db';
 import { updatePlantTrashStatus } from '@/api/services/plant-data.service';
 import { validatePlantStatusSchema } from '@/api/models/Plant';
 import { authMiddleware, errMiddleware } from '@/api/middleware';
+import { toObjectId } from '@/api/utils';
 import type { CustomReq, ServerError, Res, PlantRes } from '@/api/types';
 
 type Data = PlantRes;
@@ -15,10 +16,14 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
     userId
   } = req;
 
-  if (typeof id !== 'string')
+  const plantId = toObjectId(id); // convert to ObjectId type
+
+  if (!plantId) {
+    // 404 is valid response from the user perspective even if 400 is more accurate: 'The "id" query parameter is not a valid ObjectId.'
     return res
-      .status(400)
-      .send({ error: 'The "id" query parameter must be a string.' });
+      .status(404)
+      .send({ error: 'Plant with the given ID was not found.' });
+  }
 
   switch (method) {
     case 'PUT':
@@ -26,7 +31,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       if (error) return res.status(400).send({ error });
       try {
         const plant = await updatePlantTrashStatus({
-          plantId: id,
+          plantId,
           isInTrash: req.body.isInTrash,
           userId
         });
