@@ -11,6 +11,7 @@ import {
   TextInput
 } from '@/components';
 import { useNewPlant } from './useNewPlant';
+import { useFetchPlants } from '../../hooks';
 import { months, plantCategories } from '../../utils';
 import styles from './new-plant.module.scss';
 
@@ -29,6 +30,10 @@ export const NewPlant = () => {
     error
   } = useNewPlant();
 
+  // In case user lands on this page first
+  // We need to populate the store before the user adds a new plant
+  const { isLoading: isLoadingPlants, error: plantsError } = useFetchPlants();
+
   const nameInputId = useId();
   const varietyInputId = useId();
   const categoryInputId = useId();
@@ -43,6 +48,16 @@ export const NewPlant = () => {
   }));
 
   const selectMonthPlaceholder = 'Month';
+
+  if (isLoadingPlants)
+    return (
+      <div className={styles.plantsLoader}>
+        <Logo spin />
+      </div>
+    );
+
+  if (plantsError) return <Alert type='error' message={plantsError} />;
+
   return (
     <>
       <Heading text='New Plant' />

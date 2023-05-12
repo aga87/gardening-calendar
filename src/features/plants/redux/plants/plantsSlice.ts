@@ -22,8 +22,7 @@ export const plantsSlice = createSlice({
     // GET plants
     setPlants: (state, action: PayloadAction<PlantsWithCount>) => ({
       ...state,
-      plants: action.payload.plants,
-      plantsError: null
+      plants: action.payload.plants
     }),
     setPlantsLoading: (state, action: PayloadAction<boolean>) => ({
       ...state,
