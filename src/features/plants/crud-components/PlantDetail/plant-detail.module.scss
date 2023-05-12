@@ -1,0 +1,41 @@
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  margin-bottom: $blh * 1rem;
+}
+
+.label {
+  color: $color-canvas-secondary;
+  font-weight: bold;
+  margin-bottom: $blh * 0.25rem;
+}
+
+.data {
+  padding-left: 10px;
+  margin-bottom: $blh * 0.75rem;
+}
+
+.notes {
+  min-height: $blh * 7rem;
+  border-top: 1px solid $color-ui-tertiary;
+  border-bottom: 1px solid $color-ui-tertiary;
+  margin-bottom: $blh * 2rem;
+}
+
+.dataContainer {
+  $margin: 10px;
+  display: flex;
+  margin: -$margin;
+  max-width: 400px;
+
+  &__item {
+    flex: 0 0 calc(50% - 2 * $margin);
+    margin: $margin;
+  }
+}

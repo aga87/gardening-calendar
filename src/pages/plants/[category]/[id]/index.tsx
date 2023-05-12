@@ -1,16 +1,13 @@
 import React, { ReactElement } from 'react';
 import { useRouter } from 'next/router';
+import { PlantDetail } from '@/features/plants';
 import { Layout } from '@/layout';
 
 const PlantDetailPage = () => {
   const router = useRouter();
-  const { category, id } = router.query;
+  const { id } = router.query;
 
-  return (
-    <h1>
-      Plant detail: {category} - {id}
-    </h1>
-  );
+  return <PlantDetail plantId={id as string} />;
 };
 
 PlantDetailPage.getLayout = function getLayout(page: ReactElement) {
