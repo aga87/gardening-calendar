@@ -14,14 +14,17 @@ export type PlantRecord = {
   sowUntil: MonthRecord | null;
   harvestFrom: MonthRecord | null;
   harvestUntil: MonthRecord | null;
+  notes: string | null;
   isInTrash: boolean;
   userId: string;
 };
 
 // type that represents the API response
-export type PlantRes = Omit<PlantRecord, 'isInTrash' | 'userId'> & {
+export type PlantRes = Omit<PlantRecord, 'isInTrash' | 'userId' | 'notes'> & {
   _id: string;
 };
+
+export type PlantDetailRes = PlantRes & { notes: string | null };
 
 export type PlantsWithCountRes = {
   count: number;

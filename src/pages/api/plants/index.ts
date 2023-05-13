@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { connectToDB } from '@/api/libs/db';
 import {
   addPlant,
@@ -6,6 +7,7 @@ import {
 } from '@/api/services/plant-data.service';
 import { validatePlantSchema } from '@/api/models/Plant';
 import { authMiddleware, errMiddleware } from '@/api/middleware';
+import { isValidObjectId } from '@/api/utils';
 import type {
   CustomReq,
   PlantsWithCountRes,
@@ -42,7 +44,7 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
       }
       break;
     case 'POST':
-      const error = validatePlantSchema(req.body);
+      const error = validatePlantSchema({ plant: req.body, isEditing: false });
       if (error) return res.status(400).send({ error });
       try {
         const newPlant = await addPlant({ ...req.body, userId });
@@ -60,12 +62,24 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
         query: { id }
       } = req;
 
-      if (typeof id !== 'string')
-        return res
-          .status(400)
-          .send({ error: 'The "id" query parameter must be a string.' });
+      if (!id)
+        return res.status(400).send({
+          error: 'Plant IDs are missing. Please provide at least one ID'
+        });
 
-      const plantIds = id.split(',');
+      const ids = Array.isArray(id) ? id : [id];
+
+      const invalidIds = ids.filter(id => !isValidObjectId(id));
+
+      if (invalidIds.length > 0) {
+        return res.status(404).send({
+          error: `Plants with following ids were not found: ${invalidIds.join(
+            ', '
+          )}`
+        });
+      }
+
+      const plantIds = ids.map(id => new Types.ObjectId(id));
 
       const PLANT_IN_TRASH_ERROR_MSG =
         'The selected plants cannot be deleted because some of them are not in the trash.';

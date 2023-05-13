@@ -1,5 +1,11 @@
+import { Types } from 'mongoose';
 import { Plant } from '../models/Plant';
-import type { PlantRecord, PlantRes, PlantsWithCountRes } from '../types';
+import type {
+  PlantDetailRes,
+  PlantRecord,
+  PlantRes,
+  PlantsWithCountRes
+} from '../types';
 
 const select = '-__v -userId -isInTrash';
 
@@ -8,7 +14,7 @@ export const addPlant = async (
 ): Promise<PlantRes> => {
   const savedPlant: PlantRecord = await new Plant(plant).save();
   const foundPlant: PlantRes = await Plant.findById(savedPlant._id).select(
-    select
+    select + ' -notes'
   );
   if (!foundPlant) {
     throw new Error('Could not find the saved plant record in the database');
@@ -21,7 +27,7 @@ export const deletePlantsFromTrash = async ({
   userId,
   plantInTrashErrorMsg
 }: {
-  plantIds: string[];
+  plantIds: Types.ObjectId[];
   userId: string;
   plantInTrashErrorMsg: string;
 }): Promise<number> => {
@@ -46,11 +52,11 @@ export const editPlant = async ({
   userId,
   plantInTrashErrorMsg
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   updatedPlant: Omit<PlantRes, '_id' | 'isInTrash'>;
   userId: string;
   plantInTrashErrorMsg: string;
-}): Promise<PlantRes | null> => {
+}): Promise<PlantDetailRes | null> => {
   const query = {
     _id: plantId,
     userId
@@ -61,7 +67,7 @@ export const editPlant = async ({
     throw new Error(plantInTrashErrorMsg);
   }
 
-  const plant: PlantRes | null = await Plant.findOneAndUpdate(
+  const plant: PlantDetailRes | null = await Plant.findOneAndUpdate(
     query,
     updatedPlant,
     {
@@ -73,18 +79,17 @@ export const editPlant = async ({
   return plant;
 };
 
-export const getPlant = async ({
+export const getPlantDetail = async ({
   plantId,
   userId
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   userId: string;
-}): Promise<PlantRes | null> => {
-  const plant: PlantRes | null = await Plant.findOne({
+}): Promise<PlantDetailRes | null> => {
+  return await Plant.findOne({
     _id: plantId,
     userId
   }).select(select);
-  return plant;
 };
 
 export const getPlantsWithCount = async ({
@@ -95,7 +100,7 @@ export const getPlantsWithCount = async ({
   userId: string;
 }): Promise<PlantsWithCountRes> => {
   const plants = await Plant.find({ isInTrash, userId })
-    .select(select)
+    .select(select + ' -notes')
     .sort({ name: 1 });
   return {
     count: plants.length,
@@ -108,11 +113,11 @@ export const updatePlantTrashStatus = async ({
   isInTrash,
   userId
 }: {
-  plantId: string;
+  plantId: Types.ObjectId;
   isInTrash: boolean;
   userId: string;
-}) => {
-  const plant: PlantRes | null = await Plant.findOneAndUpdate(
+}): Promise<PlantRes | null> => {
+  return await Plant.findOneAndUpdate(
     { _id: plantId, userId },
     { $set: { isInTrash } },
     {
@@ -120,5 +125,4 @@ export const updatePlantTrashStatus = async ({
       runValidators: true
     }
   ).select(select);
-  return plant;
 };

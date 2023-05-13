@@ -8,7 +8,7 @@ import {
   Logo
 } from '@/components';
 import { PlantChart, PlantDescription } from '../../components';
-import { useFetchPlants } from './useFetchPlants';
+import { useFetchPlants } from '../../hooks';
 import { sortPlants } from '../../utils/sortPlants';
 import type { Plant, PlantCategory, Sort } from '../../types';
 import styles from './plants.module.scss';
