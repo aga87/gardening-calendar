@@ -68,7 +68,8 @@ const PlantSchema = new Schema<PlantRecord>(
     },
     sowFrom: {
       type: Number,
-      required: [
+      default: null,
+      validate: [
         hasSowUntil,
         'The starting month of the sowing season is required if the ending month of the sowing season (sowUntil) is specified.'
       ],
@@ -79,7 +80,8 @@ const PlantSchema = new Schema<PlantRecord>(
     },
     sowUntil: {
       type: Number,
-      required: [
+      default: null,
+      validate: [
         hasSowFrom,
         'The ending month of the sowing season is required if the starting month of the sowing season (sowFrom) is specified.'
       ],
@@ -90,7 +92,8 @@ const PlantSchema = new Schema<PlantRecord>(
     },
     harvestFrom: {
       type: Number,
-      required: [
+      default: null,
+      validate: [
         hasHarvestUntil,
         'The starting month of the harvesting season is required if the ending month of the harvesting season (harvestUntil) is specified.'
       ],
@@ -101,7 +104,8 @@ const PlantSchema = new Schema<PlantRecord>(
     },
     harvestUntil: {
       type: Number,
-      required: [
+      default: null,
+      validate: [
         hasHarvestFrom,
         'The ending month of the harvesting season is required if the starting month of the harvesting season (harvestFrom) is specified.'
       ],
