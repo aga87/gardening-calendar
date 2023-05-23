@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/typed-hooks';
 import { useFirstRender } from '@/hooks';
-import { getPlantDetail } from '../../redux/plants/thunks';
-import { setPlantDetailError } from '../../redux/plants/plantsSlice';
+import { getPlantDetail } from '../redux/plants/thunks';
+import { setPlantDetailError } from '../redux/plants/plantsSlice';
 import {
   selectIsLoadingPlantDetail,
   selectPlantDetailById,
   selectPlantDetailError
-} from '../../redux/plants/selectors';
+} from '../redux/plants/selectors';
 
 export const useFetchPlantDetail = (plantId: string) => {
   const dispatch = useAppDispatch();

@@ -6,6 +6,8 @@ export * from './forms/Fieldset/Fieldset';
 export * from './forms/Form/Form';
 export * from './forms/Label/Label';
 export * from './forms/SubmitButton/SubmitButton';
+export * from './forms/TextArea/TextArea';
+export * from './forms/TextArea/useTextArea';
 export * from './forms/TextInput/TextInput';
 export * from './forms/TextInput/useTextInput';
 export * from './forms/TextInput/implementations/PasswordInput';

@@ -25,12 +25,13 @@ export type Plant = {
   sowUntil: Month | null;
   harvestFrom: Month | null;
   harvestUntil: Month | null;
-  // userId: string;
 };
+
+export type NewPlant = Omit<Plant, '_id'>;
 
 export type PlantDetail = Plant & { notes: string | null };
 
-export type NewPlant = Omit<Plant, '_id' | 'userId'>;
+export type NewPlantDetail = Omit<PlantDetail, '_id'>;
 
 export type PlantsWithCount = {
   plants: Plant[];
