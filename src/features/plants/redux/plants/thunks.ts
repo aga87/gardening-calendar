@@ -16,7 +16,11 @@ import {
   // New plant detail
   setPlantDetailUpdate,
   setPlantDetailUpdateLoading,
-  setPlantDetailUpdateError
+  setPlantDetailUpdateError,
+  // Plants in trash
+  setPlantsInTrash,
+  setPlantsInTrashLoading,
+  setPlantsInTrashError
 } from './plantsSlice';
 import { setRedirectLink } from '../redirect/redirectSlice';
 import type { NewPlant, NewPlantDetail, Plant } from '../../types';
@@ -41,13 +45,29 @@ export const getPlants = (): AppThunk => async (dispatch, getState) => {
   if (plantsInStore.length > 0) return;
   // Fetch plants only if they are not already in store
   dispatch(setPlantsLoading(true));
-  const { plantsWithCount, error } = await PlantsApiService.getPlants();
-  if (plantsWithCount) {
-    dispatch(setPlants(plantsWithCount));
+  const { plants, error } = await PlantsApiService.getPlants({
+    inTrash: false
+  });
+  if (plants) {
+    dispatch(setPlants(plants));
   } else if (error) {
     dispatch(setPlantsError(error));
   }
   dispatch(setPlantsLoading(false));
+};
+
+export const getPlantsInTrash = (): AppThunk => async (dispatch, getState) => {
+  // (Always refetch plants in trash)
+  dispatch(setPlantsInTrashLoading(true));
+  const { plants, error } = await PlantsApiService.getPlants({
+    inTrash: true
+  });
+  if (plants) {
+    dispatch(setPlantsInTrash(plants));
+  } else if (error) {
+    dispatch(setPlantsInTrashError(error));
+  }
+  dispatch(setPlantsInTrashLoading(false));
 };
 
 export const getPlantDetail =

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Plant, PlantDetail, PlantsWithCount } from '../../types';
+import type { Plant, PlantDetail } from '../../types';
 
 const initialState = {
   // Plants
@@ -15,7 +15,11 @@ const initialState = {
   plantDetailError: null as null | string,
   // Update plant detail
   isLoadingPlantDetailUpdate: false,
-  plantDetailUpdateError: null as null | string
+  plantDetailUpdateError: null as null | string,
+  // Plants in trash
+  plantsInTrash: [] as Plant[],
+  isLoadingPlantsInTrash: false,
+  plantsInTrashError: null as null | string
 };
 
 export const plantsSlice = createSlice({
@@ -23,9 +27,9 @@ export const plantsSlice = createSlice({
   initialState,
   reducers: {
     // GET plants
-    setPlants: (state, action: PayloadAction<PlantsWithCount>) => ({
+    setPlants: (state, action: PayloadAction<Plant[]>) => ({
       ...state,
-      plants: action.payload.plants
+      plants: action.payload
     }),
     setPlantsLoading: (state, action: PayloadAction<boolean>) => ({
       ...state,
@@ -92,6 +96,19 @@ export const plantsSlice = createSlice({
     ) => ({
       ...state,
       plantDetailUpdateError: action.payload
+    }),
+    // GET plants in trash
+    setPlantsInTrashLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingPlantsInTrash: action.payload
+    }),
+    setPlantsInTrash: (state, action: PayloadAction<Plant[]>) => ({
+      ...state,
+      plantsInTrash: action.payload
+    }),
+    setPlantsInTrashError: (state, action: PayloadAction<null | string>) => ({
+      ...state,
+      plantsInTrashError: action.payload
     })
   }
 });
@@ -114,5 +131,9 @@ export const {
   // New plant detail
   setPlantDetailUpdate,
   setPlantDetailUpdateLoading,
-  setPlantDetailUpdateError
+  setPlantDetailUpdateError,
+  // Plants in trash
+  setPlantsInTrash,
+  setPlantsInTrashLoading,
+  setPlantsInTrashError
 } = plantsSlice.actions;

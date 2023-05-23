@@ -37,3 +37,13 @@ export const selectIsLoadingPlantDetailUpdate = (state: RootState): boolean =>
 
 export const selectPlantDetailUpdateError = (state: RootState): string | null =>
   state.plantsReducer.plantDetailUpdateError;
+
+// GET plants in trash
+export const selectPlantsInTrash = (state: RootState): Plant[] =>
+  state.plantsReducer.plantsInTrash;
+
+export const selectIsLoadingPlantsInTrash = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingPlantsInTrash;
+
+export const selectPlantsInTrashError = (state: RootState): string | null =>
+  state.plantsReducer.plantsInTrashError;

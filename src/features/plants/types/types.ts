@@ -33,9 +33,4 @@ export type PlantDetail = Plant & { notes: string | null };
 
 export type NewPlantDetail = Omit<PlantDetail, '_id'>;
 
-export type PlantsWithCount = {
-  plants: Plant[];
-  count: number;
-};
-
 export type Sort = 'name' | 'sowing time' | 'harvesting time';
