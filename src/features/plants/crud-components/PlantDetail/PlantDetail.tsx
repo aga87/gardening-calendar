@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Alert, Button, Heading, Logo } from '@/components';
-import { useFetchPlantDetail } from './useFetchPlantDetail';
+import { useFetchPlantDetail } from '../../hooks/useFetchPlantDetail';
 import type { Plant } from '../../types';
 import { capitalize } from '@/utils';
 import { months } from '../../utils';
@@ -38,7 +38,7 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
     : '-';
 
   return (
-    <>
+    <div className={styles.container}>
       <Heading text='Plant Detail' />
       {error && (
         <div className={styles.error}>
@@ -86,9 +86,11 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
             <dt className={styles.label}>Notes</dt>
             <dd className={styles.notes}>{plantDetail.notes || ''}</dd>
           </dl>
-          <Button variant='primary' text='Edit' handleClick={handleClick} />
+          <div className={styles.buttonContainer}>
+            <Button variant='primary' text='Edit' handleClick={handleClick} />
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 };

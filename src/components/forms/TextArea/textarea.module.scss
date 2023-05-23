@@ -1,0 +1,23 @@
+@import '@/styles/helpers/modular-typography.module.scss';
+@import '@/styles/variables/colors.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.textarea {
+  width: 100%;
+  height: $blh * 6rem;
+  resize: none;
+  padding: $blh * 0.5rem;
+  border-radius: 4px;
+
+  &:focus {
+    outline: none;
+    border: 1px solid $color-ui-primary;
+  }
+
+  &__error {
+    @include s2;
+    color: $color-ui-danger;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+}

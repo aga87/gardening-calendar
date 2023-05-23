@@ -1,0 +1,32 @@
+@import '@/styles/helpers/responsive-breakpoints.module.scss';
+@import '@/styles/variables/typography.module.scss';
+
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  margin-bottom: $blh * 1rem;
+}
+
+.container {
+  $xs-breakpoint: 350px;
+  $margin: 10px;
+
+  @include screen-min($xs-breakpoint) {
+    display: flex;
+    margin: -$margin;
+  }
+
+  &__item {
+    @include screen-min($xs-breakpoint) {
+      flex: 0 0 calc(50% - 2 * $margin);
+      margin: $margin;
+    }
+  }
+}
+
+.buttonContainer {
+  padding: $blh * 1rem 0;
+}
