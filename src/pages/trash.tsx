@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Layout } from '@/layout';
+import { PlantsInTrash } from '@/features/plants';
 
 const TrashPage = () => {
-  return <h1>Trash</h1>;
+  return <PlantsInTrash />;
 };
 
 TrashPage.getLayout = function getLayout(page: ReactElement) {

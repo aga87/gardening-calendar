@@ -1,0 +1,16 @@
+@import '@/styles/variables/typography.module.scss';
+
+.loader {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  list-style-type: none;
+
+  &__item {
+    margin-bottom: $blh * 1.5rem;
+  }
+}
