@@ -12,10 +12,28 @@ import {
   // Plant detail
   setPlantDetail,
   setPlantDetailLoading,
-  setPlantDetailError
+  setPlantDetailError,
+  // New plant detail
+  setPlantDetailUpdate,
+  setPlantDetailUpdateLoading,
+  setPlantDetailUpdateError
 } from './plantsSlice';
 import { setRedirectLink } from '../redirect/redirectSlice';
-import type { NewPlant } from '../../types';
+import type { NewPlant, NewPlantDetail, Plant } from '../../types';
+
+export const addNewPlant =
+  (newPlant: NewPlant): AppThunk =>
+  async dispatch => {
+    dispatch(setNewPlantLoading(true));
+    const { plant, error } = await PlantsApiService.addPlant(newPlant);
+    if (plant) {
+      dispatch(setNewPlant(plant));
+      dispatch(setRedirectLink(`/plants/${plant.category}/${plant._id}`));
+    } else if (error) {
+      dispatch(setNewPlantError(error));
+    }
+    dispatch(setNewPlantLoading(false));
+  };
 
 export const getPlants = (): AppThunk => async (dispatch, getState) => {
   // If the plants are already in Redux store, do not fetch
@@ -33,7 +51,7 @@ export const getPlants = (): AppThunk => async (dispatch, getState) => {
 };
 
 export const getPlantDetail =
-  (plantId: string): AppThunk =>
+  (plantId: Plant['_id']): AppThunk =>
   async (dispatch, getState) => {
     // If the plant detail is already in Redux store, do not fetch
     const plantDetailsInStore = getState().plantsReducer.plantDetails;
@@ -51,16 +69,27 @@ export const getPlantDetail =
     dispatch(setPlantDetailLoading(false));
   };
 
-export const addNewPlant =
-  (newPlant: NewPlant): AppThunk =>
+export const editPlantDetail =
+  ({
+    newPlantDetail,
+    plantId
+  }: {
+    newPlantDetail: NewPlantDetail;
+    plantId: Plant['_id'];
+  }): AppThunk =>
   async dispatch => {
-    dispatch(setNewPlantLoading(true));
-    const { plant, error } = await PlantsApiService.addPlant(newPlant);
-    if (plant) {
-      dispatch(setNewPlant(plant));
-      dispatch(setRedirectLink(`/plants/${plant.category}/${plant._id}`));
+    dispatch(setPlantDetailUpdateLoading(true));
+    const { updatedPlantDetail, error } =
+      await PlantsApiService.editPlantDetail({ newPlantDetail, plantId });
+    if (updatedPlantDetail) {
+      dispatch(setPlantDetailUpdate(updatedPlantDetail));
+      dispatch(
+        setRedirectLink(
+          `/plants/${updatedPlantDetail.category}/${updatedPlantDetail._id}`
+        )
+      );
     } else if (error) {
-      dispatch(setNewPlantError(error));
+      dispatch(setPlantDetailUpdateError(error));
     }
-    dispatch(setNewPlantLoading(false));
+    dispatch(setPlantDetailUpdateLoading(false));
   };

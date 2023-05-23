@@ -11,7 +11,7 @@ export const selectIsLoadingPlants = (state: RootState): boolean =>
 export const selectPlantsError = (state: RootState): string | null =>
   state.plantsReducer.plantsError;
 
-// POST New plant
+// ADD New plant
 export const selectIsLoadingNewPlant = (state: RootState): boolean =>
   state.plantsReducer.isLoadingNewPlant;
 
@@ -30,3 +30,10 @@ export const selectIsLoadingPlantDetail = (state: RootState): boolean =>
 
 export const selectPlantDetailError = (state: RootState): string | null =>
   state.plantsReducer.plantDetailError;
+
+// UPDATE Plant detail
+export const selectIsLoadingPlantDetailUpdate = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingPlantDetailUpdate;
+
+export const selectPlantDetailUpdateError = (state: RootState): string | null =>
+  state.plantsReducer.plantDetailUpdateError;
