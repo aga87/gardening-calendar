@@ -24,7 +24,11 @@ import {
   // Move plant to trash
   setMovePlantToTrashLoading,
   setMovePlantToTrash,
-  setMovePlantToTrashError
+  setMovePlantToTrashError,
+  // Restore plant
+  setRestorePlantLoading,
+  setRestorePlant,
+  setRestorePlantError
 } from './plantsSlice';
 import { setRedirectLink } from '../redirect/redirectSlice';
 import type { NewPlant, NewPlantDetail, Plant } from '../../types';
@@ -134,4 +138,22 @@ export const movePlantToTrash =
       dispatch(setMovePlantToTrashError(error));
     }
     dispatch(setMovePlantToTrashLoading(false));
+  };
+
+export const restorePlant =
+  (plantId: Plant['_id']): AppThunk =>
+  async dispatch => {
+    dispatch(setRestorePlantLoading(true));
+    const { updatedPlantDetail, error } =
+      await PlantsApiService.updatePlantTrashStatus({
+        plantId,
+        isInTrash: false
+      });
+    if (updatedPlantDetail) {
+      const { notes, ...plant } = updatedPlantDetail;
+      dispatch(setRestorePlant(plant));
+    } else if (error) {
+      dispatch(setRestorePlantError(error));
+    }
+    dispatch(setRestorePlantLoading(false));
   };
