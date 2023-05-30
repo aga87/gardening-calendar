@@ -19,7 +19,10 @@ const initialState = {
   // Plants in trash
   plantsInTrash: [] as Plant[],
   isLoadingPlantsInTrash: false,
-  plantsInTrashError: null as null | string
+  plantsInTrashError: null as null | string,
+  // Move plant to trash
+  isLoadingMovePlantToTrash: false,
+  movePlantToTrashError: null as string | null
 };
 
 export const plantsSlice = createSlice({
@@ -109,6 +112,25 @@ export const plantsSlice = createSlice({
     setPlantsInTrashError: (state, action: PayloadAction<null | string>) => ({
       ...state,
       plantsInTrashError: action.payload
+    }),
+    // Move plant to trash
+    setMovePlantToTrashLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingMovePlantToTrash: action.payload
+    }),
+    setMovePlantToTrash: (state, action: PayloadAction<Plant['_id']>) => ({
+      ...state,
+      plants: state.plants.filter(plant => plant._id !== action.payload),
+      plantDetails: state.plantDetails.filter(
+        plant => plant._id !== action.payload
+      )
+    }),
+    setMovePlantToTrashError: (
+      state,
+      action: PayloadAction<null | string>
+    ) => ({
+      ...state,
+      movePlantToTrashError: action.payload
     })
   }
 });
@@ -135,5 +157,9 @@ export const {
   // Plants in trash
   setPlantsInTrash,
   setPlantsInTrashLoading,
-  setPlantsInTrashError
+  setPlantsInTrashError,
+  // Move plant to trash
+  setMovePlantToTrashLoading,
+  setMovePlantToTrash,
+  setMovePlantToTrashError
 } = plantsSlice.actions;

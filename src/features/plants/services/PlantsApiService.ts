@@ -65,5 +65,23 @@ export const PlantsApiService = {
     } catch (err: unknown) {
       return { updatedPlantDetail: null, error: getError(err) };
     }
+  },
+  updatePlantTrashStatus: async ({
+    plantId,
+    isInTrash
+  }: {
+    plantId: Plant['_id'];
+    isInTrash: boolean;
+  }) => {
+    try {
+      const apiInstance = await getApiInstance();
+      const res = await apiInstance.put(`/api/plants/${plantId}/trash`, {
+        isInTrash
+      });
+      const updatedPlantDetail: PlantDetail | null = res.data;
+      return { updatedPlantDetail, error: null };
+    } catch (err) {
+      return { updatedPlantDetail: null, error: getError(err) };
+    }
   }
 };
