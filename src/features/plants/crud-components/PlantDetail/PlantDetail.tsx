@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Alert, Button, Heading, Logo } from '@/components';
-import { useFetchPlantDetail } from '../../hooks/useFetchPlantDetail';
-import type { Plant } from '../../types';
+import { Alert, Button, Heading, Logo, TrashIcon } from '@/components';
 import { capitalize } from '@/utils';
+import { useMoveToTrash } from './useMoveToTrash';
+import { useFetchPlantDetail, useRedirect } from '../../hooks';
+import type { Plant } from '../../types';
 import { months } from '../../utils';
 import styles from './plant-detail.module.scss';
 
@@ -13,6 +14,12 @@ type PlantDetailProps = {
 
 export const PlantDetail = ({ plantId }: PlantDetailProps) => {
   const { plantDetail, isLoading, error } = useFetchPlantDetail(plantId);
+
+  const { handleMoveToTrashClick, isLoadingMoveToTrash, moveToTrashError } =
+    useMoveToTrash(plantId);
+
+  // Redirect upon successful plant deletion
+  useRedirect();
 
   const router = useRouter();
   const { id, category } = router.query;
@@ -45,7 +52,12 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
           <Alert type='error' message={error} />
         </div>
       )}
-      {isLoading && (
+      {moveToTrashError && (
+        <div className={styles.error}>
+          <Alert type='error' message={moveToTrashError} />
+        </div>
+      )}
+      {(isLoading || isLoadingMoveToTrash) && (
         <div className={styles.loader}>
           <Logo spin />
         </div>
@@ -87,7 +99,17 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
             <dd className={styles.notes}>{plantDetail.notes || ''}</dd>
           </dl>
           <div className={styles.buttonContainer}>
-            <Button variant='primary' text='Edit' handleClick={handleClick} />
+            <div className={styles.buttonContainer__item}>
+              <Button variant='primary' text='Edit' handleClick={handleClick} />
+            </div>
+            <div className={styles.buttonContainer__item}>
+              <Button
+                variant='tertiary'
+                text='Delete'
+                icon={<TrashIcon />}
+                handleClick={handleMoveToTrashClick}
+              />
+            </div>
           </div>
         </>
       )}
