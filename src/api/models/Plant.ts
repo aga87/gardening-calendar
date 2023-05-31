@@ -17,20 +17,18 @@ const NAME_MAX_LENGTH = 20;
 const VARIETY_MAX_LENGTH = 30;
 const NOTES_MAX_LENGTH = 1000;
 
-function hasSowFrom(this: PlantRecord) {
-  return this.sowFrom !== null;
+function isSowingMonthValid(this: PlantRecord) {
+  return (
+    (this.sowFrom === null && this.sowUntil === null) ||
+    (this.sowFrom !== null && this.sowUntil !== null)
+  );
 }
 
-function hasSowUntil(this: PlantRecord) {
-  return this.sowUntil !== null;
-}
-
-function hasHarvestFrom(this: PlantRecord) {
-  return this.harvestFrom !== null;
-}
-
-function hasHarvestUntil(this: PlantRecord) {
-  return this.harvestUntil !== null;
+function isHarvestMonthValid(this: PlantRecord) {
+  return (
+    (this.harvestFrom === null && this.harvestUntil === null) ||
+    (this.harvestFrom !== null && this.harvestUntil !== null)
+  );
 }
 
 // Mongoose Schema
@@ -70,7 +68,7 @@ const PlantSchema = new Schema<PlantRecord>(
       type: Number,
       default: null,
       validate: [
-        hasSowUntil,
+        isSowingMonthValid,
         'The starting month of the sowing season is required if the ending month of the sowing season (sowUntil) is specified.'
       ],
       enum: {
@@ -82,7 +80,7 @@ const PlantSchema = new Schema<PlantRecord>(
       type: Number,
       default: null,
       validate: [
-        hasSowFrom,
+        isSowingMonthValid,
         'The ending month of the sowing season is required if the starting month of the sowing season (sowFrom) is specified.'
       ],
       enum: {
@@ -94,7 +92,7 @@ const PlantSchema = new Schema<PlantRecord>(
       type: Number,
       default: null,
       validate: [
-        hasHarvestUntil,
+        isHarvestMonthValid,
         'The starting month of the harvesting season is required if the ending month of the harvesting season (harvestUntil) is specified.'
       ],
       enum: {
@@ -106,7 +104,7 @@ const PlantSchema = new Schema<PlantRecord>(
       type: Number,
       default: null,
       validate: [
-        hasHarvestFrom,
+        isHarvestMonthValid,
         'The ending month of the harvesting season is required if the starting month of the harvesting season (harvestFrom) is specified.'
       ],
       enum: {
