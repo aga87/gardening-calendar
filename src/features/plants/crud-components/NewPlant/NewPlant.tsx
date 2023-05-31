@@ -5,7 +5,7 @@ import {
   Form,
   Heading,
   Label,
-  Logo,
+  Loader,
   SelectInput,
   SubmitButton,
   TextInput
@@ -49,28 +49,19 @@ export const NewPlant = () => {
 
   const selectMonthPlaceholder = 'Month';
 
-  if (isLoadingPlants)
-    return (
-      <div className={styles.plantsLoader}>
-        <Logo spin />
-      </div>
-    );
+  if (isLoadingPlants) return <Loader />;
 
   if (plantsError) return <Alert type='error' message={plantsError} />;
 
   return (
-    <>
+    <div className={styles.newPlantContainer}>
       <Heading text='New Plant' />
       {error && (
         <div className={styles.error}>
           <Alert type='error' message={error} />
         </div>
       )}
-      {isLoading && (
-        <div className={styles.loader}>
-          <Logo spin />
-        </div>
-      )}
+      {isLoading && <Loader />}
       <Form handleSubmit={handleSubmit}>
         <Label inputId={nameInputId} text='Name' />
         <TextInput
@@ -158,6 +149,6 @@ export const NewPlant = () => {
           <SubmitButton text='Add plant' />
         </div>
       </Form>
-    </>
+    </div>
   );
 };

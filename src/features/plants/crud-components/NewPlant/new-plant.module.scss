@@ -1,16 +1,8 @@
 @import '@/styles/helpers/responsive-breakpoints.module.scss';
 @import '@/styles/variables/typography.module.scss';
 
-.plantsLoader {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader {
-  display: flex;
-  justify-content: center;
+.newPlantContainer {
+  max-width: 500px;
 }
 
 .error {

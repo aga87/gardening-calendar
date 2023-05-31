@@ -18,7 +18,7 @@
   height: 36px; // magic number based on text input height
   cursor: context-menu;
   border: none;
-  border-bottom: 1px solid $color-canvas-secondary-dim;
+  border-bottom: 1px solid $color-ui-tertiary;
 
   &:focus {
     outline: none;

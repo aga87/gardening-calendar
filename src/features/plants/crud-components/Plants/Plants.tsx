@@ -5,7 +5,7 @@ import {
   CustomSelect,
   Heading,
   useCustomSelect,
-  Logo
+  Loader
 } from '@/components';
 import { PlantChart, PlantDescription } from '../../components';
 import { useFetchPlants } from '../../hooks';
@@ -60,12 +60,7 @@ export const Plants = ({ category }: PlantsProps) => {
     );
   });
 
-  if (isLoading)
-    return (
-      <div className={styles.loader}>
-        <Logo spin />
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error) return <Alert type='error' message={error} />;
   return (
     <>

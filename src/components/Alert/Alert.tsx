@@ -1,6 +1,5 @@
 import React from 'react';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { CheckmarkCircledIcon, ErrorIcon } from '@/icons';
 import styles from './alert.module.scss';
 
 type AlertProps = {
@@ -19,9 +18,9 @@ export const Alert = ({ variant = 'primary', type, message }: AlertProps) => {
 
   let icon;
   if (type === 'error') {
-    icon = <ErrorOutlineIcon className={iconClassName} />;
+    icon = <ErrorIcon className={iconClassName} />;
   } else {
-    icon = <CheckCircleOutlineIcon className={iconClassName} />;
+    icon = <CheckmarkCircledIcon className={iconClassName} />;
   }
 
   return (

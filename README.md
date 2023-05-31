@@ -34,3 +34,46 @@ Users can securely sign up and sign in to the application using Firebase Authent
   - delete plants from trash.
 
 ### UI / Dashboard
+
+#### Sign in & Sign up
+
+Features:
+
+- client-side form validation,
+- error handling,
+- password strength validator
+- show/ hide password functionality
+
+![](./_screenshots/sign-in.png)
+
+![](./_screenshots/sign-up.png)
+
+#### Plants
+
+- See all plants
+- Sort plants by name, sowing or harvesting time
+- View plants by category
+
+![](./_screenshots/plants.png)
+
+#### New plant
+
+- add new plant with client-side validation
+- redirect to plant detail upon success
+
+![](./_screenshots/new-plant.png)
+
+#### Plant detail
+
+- view plant details
+- edit plant details
+- delete the plant
+
+![](./_screenshots/plant-detail.png)
+
+#### Trash
+
+- restore individual plants
+- delete all plants
+
+![](./_screenshots/trash.png)

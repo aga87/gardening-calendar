@@ -1,13 +1,7 @@
 @import '@/styles/helpers/modular-typography.module.scss';
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
-
-.loader {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@import '@/styles/variables/ui.module.scss';
 
 .errorWrapper {
   margin-bottom: $blh * 1.5rem;
@@ -31,6 +25,7 @@
     color: $color-text-secondary;
     background-color: $color-ui-primary;
     border: none;
+    border-radius: $border-radius;
     cursor: pointer;
   }
 }

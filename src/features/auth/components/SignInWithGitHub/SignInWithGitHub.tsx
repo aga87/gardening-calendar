@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppDispatch } from '@/redux/typed-hooks';
 import { signInWithGitHub } from '../../redux/authSlice';
-import { Button, GitHubIcon } from '@/components';
+import { Button } from '@/components';
+import { GitHubIcon } from '@/icons';
 import styles from './sign-in-with-github.module.scss';
 
 export const SignInWithGitHub = () => {

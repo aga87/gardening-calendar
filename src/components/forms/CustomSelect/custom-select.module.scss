@@ -1,13 +1,13 @@
 @import '@/styles/helpers/modular-typography.module.scss';
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
 
 .select {
   position: relative;
 }
 
 .options {
-  $border-radius: 4px;
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -30,9 +30,11 @@
 
 .selected {
   &:focus {
-    outline: none;
     border: 2px solid $color-ui-primary;
     border-top: none;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    outline: none;
   }
 
   &__text {

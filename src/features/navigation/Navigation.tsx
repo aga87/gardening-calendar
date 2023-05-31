@@ -1,12 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import {
-  AddIcon,
-  LogOutIcon,
-  NavButton,
-  Navigation as NavigationComponent,
-  TrashIcon
-} from '@/components';
+import { NavButton, Navigation as NavigationComponent } from '@/components';
+import { AddIcon, LogOutIcon, TrashIcon } from '@/icons';
 import { useSignOut } from '../auth/hooks';
 import styles from './navigation.module.scss';
 

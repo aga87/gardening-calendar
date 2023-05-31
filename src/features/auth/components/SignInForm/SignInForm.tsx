@@ -2,13 +2,13 @@ import React, { useId } from 'react';
 import {
   Alert,
   Button,
-  EmailIcon,
   Form,
   Label,
   PasswordInput,
   SubmitButton,
   TextInput
 } from '@/components';
+import { EmailIcon } from '@/icons';
 import { useInputFocus } from '@/hooks';
 import { useSignInForm } from './useSignInForm';
 import styles from './sign-in-form.module.scss';

@@ -4,7 +4,7 @@ import {
   Fieldset,
   Form,
   Label,
-  Logo,
+  Loader,
   SelectInput,
   SubmitButton,
   TextArea,
@@ -62,11 +62,7 @@ export const PlantDetailForm = ({ plantDetail }: PlantDetailFormProps) => {
           <Alert type='error' message={error} />
         </div>
       )}
-      {isLoading && (
-        <div className={styles.loader}>
-          <Logo spin />
-        </div>
-      )}
+      {isLoading && <Loader />}
       <Form handleSubmit={handleSubmit}>
         <Label inputId={nameInputId} text='Name' />
         <TextInput

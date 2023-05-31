@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppDispatch } from '@/redux/typed-hooks';
 import { signInWithGoogle } from '../../redux/authSlice';
-import { Button, GoogleIcon } from '@/components';
+import { Button } from '@/components';
+import { GoogleIcon } from '@/icons';
 import styles from './sign-in-with-google.module.scss';
 
 export const SignInWithGoogle = () => {

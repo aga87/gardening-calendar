@@ -17,6 +17,7 @@
   height: 35px;
   background-color: $color-canvas-primary;
   border-radius: 4px;
+  outline: 2px solid $color-canvas-secondary;
 
   &.logo--spin {
     animation: spin infinite 2s linear;

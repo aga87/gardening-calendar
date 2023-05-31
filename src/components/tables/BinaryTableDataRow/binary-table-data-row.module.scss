@@ -1,9 +1,11 @@
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
 
 .one,
 .zero {
   height: $blh * 0.5rem;
+  border-radius: $border-radius;
 }
 
 .zero {

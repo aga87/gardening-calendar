@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Alert, Button, Heading, Logo, TrashIcon } from '@/components';
+import { Alert, Button, Heading, Loader } from '@/components';
+import { TrashIcon } from '@/icons';
 import { capitalize } from '@/utils';
 import { useMoveToTrash } from './useMoveToTrash';
 import { useFetchPlantDetail, useRedirect } from '../../hooks';
@@ -30,19 +31,19 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
 
   const sowFromMonthName = plantDetail?.sowFrom
     ? months[plantDetail.sowFrom - 1]
-    : '-';
+    : null;
 
   const sowUntilMonthName = plantDetail?.sowUntil
     ? months[plantDetail.sowUntil - 1]
-    : '-';
+    : null;
 
   const harvestFromMonthName = plantDetail?.harvestFrom
     ? months[plantDetail.harvestFrom - 1]
-    : '-';
+    : null;
 
   const harvestUntilMonthName = plantDetail?.harvestUntil
     ? months[plantDetail.harvestUntil - 1]
-    : '-';
+    : null;
 
   return (
     <div className={styles.container}>
@@ -57,11 +58,7 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
           <Alert type='error' message={moveToTrashError} />
         </div>
       )}
-      {(isLoading || isLoadingMoveToTrash) && (
-        <div className={styles.loader}>
-          <Logo spin />
-        </div>
-      )}
+      {(isLoading || isLoadingMoveToTrash) && <Loader />}
       {plantDetail && (
         <>
           <dl className={styles.list}>
@@ -74,26 +71,26 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
             <dt className={styles.label}>Category</dt>
             <dd className={styles.data}>{capitalize(plantDetail.category)}</dd>
             <dt className={styles.label}>Sow</dt>
-            <dd className={styles.dataContainer}>
-              <div className={styles.dataContainer__item}>
-                <div>From</div>
-                <div className={styles.data}>{sowFromMonthName}</div>
-              </div>
-              <div className={styles.dataContainer__item}>
-                <div>Until</div>
-                <div className={styles.data}>{sowUntilMonthName}</div>
-              </div>
+            <dd className={styles.data}>
+              {sowFromMonthName ? (
+                <>
+                  From <b>{sowFromMonthName}</b> until{' '}
+                  <b>{sowUntilMonthName}</b>.
+                </>
+              ) : (
+                '-'
+              )}
             </dd>
             <dt className={styles.label}>Harvest</dt>
-            <dd className={styles.dataContainer}>
-              <div className={styles.dataContainer__item}>
-                <div>From</div>
-                <div className={styles.data}>{harvestFromMonthName}</div>
-              </div>
-              <div className={styles.dataContainer__item}>
-                <div>Until</div>
-                <div className={styles.data}>{harvestUntilMonthName}</div>
-              </div>
+            <dd className={styles.data}>
+              {harvestFromMonthName ? (
+                <>
+                  From <b>{harvestFromMonthName}</b> until{' '}
+                  <b>{harvestUntilMonthName}</b>.
+                </>
+              ) : (
+                '-'
+              )}
             </dd>
             <dt className={styles.label}>Notes</dt>
             <dd className={styles.notes}>{plantDetail.notes || ''}</dd>

@@ -1,5 +1,5 @@
 import React from 'react';
-import YardIcon from '@mui/icons-material/Yard';
+import { FlowerIcon } from '@/icons';
 import styles from './logo.module.scss';
 
 type LogoProps = {
@@ -14,7 +14,7 @@ export const Logo = ({ spin = false }: LogoProps) => {
 
   return (
     <div className={className}>
-      <YardIcon className={styles.logo__icon} fontSize='large' />
+      <FlowerIcon className={styles.logo__icon} />
     </div>
   );
 };

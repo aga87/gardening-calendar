@@ -1,8 +1,6 @@
 import React, { useId } from 'react';
 import {
   Alert,
-  CheckmarkIcon,
-  EmailIcon,
   Form,
   Label,
   PasswordInput,
@@ -10,6 +8,7 @@ import {
   SubmitButton,
   TextInput
 } from '@/components';
+import { CheckmarkIcon, EmailIcon } from '@/icons';
 import { useInputFocus } from '@/hooks';
 import { useSignUpForm } from './useSignUpForm';
 import styles from './sign-up-form.module.scss';
