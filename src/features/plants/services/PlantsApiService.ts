@@ -83,5 +83,14 @@ export const PlantsApiService = {
     } catch (err) {
       return { updatedPlantDetail: null, error: getError(err) };
     }
+  },
+  deletePlantsFromTrash: async () => {
+    try {
+      const apiInstance = await getApiInstance();
+      await apiInstance.delete('/api/plants/trash');
+      return { error: null };
+    } catch (err) {
+      return { error: getError(err) };
+    }
   }
 };

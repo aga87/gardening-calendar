@@ -28,7 +28,11 @@ import {
   // Restore plant
   setRestorePlantLoading,
   setRestorePlant,
-  setRestorePlantError
+  setRestorePlantError,
+  // Delete plants
+  setDeletePlantsLoading,
+  setDeletePlants,
+  setDeletePlantsError
 } from './plantsSlice';
 import { setRedirectLink } from '../redirect/redirectSlice';
 import type { NewPlant, NewPlantDetail, Plant } from '../../types';
@@ -157,3 +161,14 @@ export const restorePlant =
     }
     dispatch(setRestorePlantLoading(false));
   };
+
+export const deletePlants = (): AppThunk => async dispatch => {
+  dispatch(setDeletePlantsLoading(true));
+  const { error } = await PlantsApiService.deletePlantsFromTrash();
+  if (!error) {
+    dispatch(setDeletePlants());
+  } else if (error) {
+    dispatch(setDeletePlantsError(error));
+  }
+  dispatch(setDeletePlantsLoading(false));
+};

@@ -54,3 +54,10 @@ export const selectIsLoadingMovePlantToTrash = (state: RootState): boolean =>
 
 export const selectMovePlantToTrashError = (state: RootState): string | null =>
   state.plantsReducer.movePlantToTrashError;
+
+// Delete plants
+export const selectIsLoadingDeletePlants = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingDeletePlants;
+
+export const selectDeletePlantsError = (state: RootState): string | null =>
+  state.plantsReducer.deletePlantsError;

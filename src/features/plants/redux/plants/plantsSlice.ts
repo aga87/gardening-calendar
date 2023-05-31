@@ -25,7 +25,10 @@ const initialState = {
   movePlantToTrashError: null as string | null,
   // Restore plant
   isLoadingRestorePlant: false,
-  restorePlantError: null as null | string
+  restorePlantError: null as null | string,
+  // Delete plants
+  isLoadingDeletePlants: false,
+  deletePlantsError: null as null | string
 };
 
 export const plantsSlice = createSlice({
@@ -150,6 +153,19 @@ export const plantsSlice = createSlice({
     setRestorePlantError: (state, action: PayloadAction<null | string>) => ({
       ...state,
       restorePlantError: action.payload
+    }),
+    // Delete plants
+    setDeletePlantsLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingDeletePlants: action.payload
+    }),
+    setDeletePlants: state => ({
+      ...state,
+      plantsInTrash: []
+    }),
+    setDeletePlantsError: (state, action: PayloadAction<null | string>) => ({
+      ...state,
+      deletePlantsError: action.payload
     })
   }
 });
@@ -184,5 +200,9 @@ export const {
   // Restore plant
   setRestorePlantLoading,
   setRestorePlant,
-  setRestorePlantError
+  setRestorePlantError,
+  // Delete plants
+  setDeletePlantsLoading,
+  setDeletePlants,
+  setDeletePlantsError
 } = plantsSlice.actions;
