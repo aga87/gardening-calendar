@@ -25,8 +25,12 @@ Users can securely sign up and sign in to the application using Firebase Authent
 ### Plants API (RESTful)
 
 - Authenticated users are allowed to access the Plants API routes.
-- Users can view their plant collection, add new plants, edit existing plants, move plants to trash, restore plants and delete plants.
+- Authenticated users can:
+  - view their plant collection,
+  - add new plants,
+  - edit existing plants,
+  - move plants to trash,
+  - restore plants from trash, and
+  - delete plants from trash.
 
 ### UI / Dashboard
-
-Upcoming.
