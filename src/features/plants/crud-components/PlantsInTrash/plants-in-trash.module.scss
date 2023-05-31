@@ -3,13 +3,6 @@
 @import '@/styles/variables/typography.module.scss';
 @import '@/styles/variables/ui.module.scss';
 
-.loader {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .errorWrapper {
   margin-bottom: $blh * 1.5rem;
 }

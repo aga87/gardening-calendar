@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Alert, Button, Heading, Logo } from '@/components';
+import { Alert, Button, Heading, Loader } from '@/components';
 import { TrashIcon } from '@/icons';
 import { capitalize } from '@/utils';
 import { useMoveToTrash } from './useMoveToTrash';
@@ -58,11 +58,7 @@ export const PlantDetail = ({ plantId }: PlantDetailProps) => {
           <Alert type='error' message={moveToTrashError} />
         </div>
       )}
-      {(isLoading || isLoadingMoveToTrash) && (
-        <div className={styles.loader}>
-          <Logo spin />
-        </div>
-      )}
+      {(isLoading || isLoadingMoveToTrash) && <Loader />}
       {plantDetail && (
         <>
           <dl className={styles.list}>

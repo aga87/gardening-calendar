@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Heading, Logo } from '@/components';
+import { Alert, Heading, Loader } from '@/components';
 import { PlantDetailForm } from '../../components';
 import { useFetchPlantDetail } from '../../hooks';
 import type { Plant } from '../../types';
@@ -15,11 +15,7 @@ export const EditPlantDetail = ({ plantId }: EditPlantDetailProps) => {
   return (
     <div className={styles.container}>
       <Heading text='Edit Plant Detail' />
-      {isLoading && (
-        <div className={styles.loader}>
-          <Logo spin />
-        </div>
-      )}
+      {isLoading && <Loader />}
       {error && <Alert type='error' message={error} />}
       {!plantDetail && !error && !isLoading && (
         <Alert type='error' message='Plant details not found' />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo } from '@/components';
+import { Loader } from '@/components';
 import { useAuthRedirect } from './useAuthRedirect';
 import styles from './auth-redirect.module.scss';
 
@@ -13,7 +13,7 @@ export const AuthRedirect = ({ children }: AuthRedirectProps) => {
   if (isLoading)
     return (
       <div className={styles.container}>
-        <Logo spin />
+        <Loader />
       </div>
     );
 

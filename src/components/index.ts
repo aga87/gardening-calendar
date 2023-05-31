@@ -15,6 +15,7 @@ export * from './forms/TextInput/implementations/usePasswordStrength';
 export * from './forms/SelectInput/SelectInput';
 export * from './forms/SelectInput/useSelectInput';
 export * from './Heading/Heading';
+export * from './Loader/Loader';
 export * from './Logo/Logo';
 export * from './nav/NavButton/NavButton';
 export * from './nav/Navigation/Navigation';
