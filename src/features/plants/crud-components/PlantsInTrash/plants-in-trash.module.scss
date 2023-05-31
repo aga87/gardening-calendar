@@ -1,6 +1,7 @@
 @import '@/styles/helpers/modular-typography.module.scss';
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
 
 .loader {
   height: 100%;
@@ -31,6 +32,7 @@
     color: $color-text-secondary;
     background-color: $color-ui-primary;
     border: none;
+    border-radius: $border-radius;
     cursor: pointer;
   }
 }

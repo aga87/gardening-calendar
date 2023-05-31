@@ -14,7 +14,8 @@ $padding: 0.25rem * $blh;
   align-items: center;
   padding-right: 2 * $padding;
   border: none;
-  border-bottom: 1px solid $color-canvas-secondary-dim;
+  border-bottom: 1px solid $color-ui-tertiary;
+
 
   &:focus-within {
     border-color: $color-ui-primary;

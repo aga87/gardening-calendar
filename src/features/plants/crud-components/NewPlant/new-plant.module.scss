@@ -1,6 +1,10 @@
 @import '@/styles/helpers/responsive-breakpoints.module.scss';
 @import '@/styles/variables/typography.module.scss';
 
+.newPlantContainer {
+  max-width: 500px;
+}
+
 .plantsLoader {
   height: 100%;
   display: flex;

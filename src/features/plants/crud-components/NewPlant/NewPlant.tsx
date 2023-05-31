@@ -59,7 +59,7 @@ export const NewPlant = () => {
   if (plantsError) return <Alert type='error' message={plantsError} />;
 
   return (
-    <>
+    <div className={styles.newPlantContainer}>
       <Heading text='New Plant' />
       {error && (
         <div className={styles.error}>
@@ -158,6 +158,6 @@ export const NewPlant = () => {
           <SubmitButton text='Add plant' />
         </div>
       </Form>
-    </>
+    </div>
   );
 };

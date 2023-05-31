@@ -1,13 +1,15 @@
 @import '@/styles/helpers/modular-typography.module.scss';
 @import '@/styles/variables/colors.module.scss';
 @import '@/styles/variables/typography.module.scss';
+@import '@/styles/variables/ui.module.scss';
 
 .textarea {
   width: 100%;
   height: $blh * 6rem;
   resize: none;
   padding: $blh * 0.5rem;
-  border-radius: 4px;
+  border: 1px solid $color-ui-tertiary;
+  border-radius: $border-radius;
 
   &:focus {
     outline: none;

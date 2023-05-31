@@ -15,7 +15,7 @@ const AuthPage = () => {
             rel='noopener noreferrer'
             className={styles.footer__link}
           >
-            Image designed by Bimbimkha / Freepik
+            Image designed by Freepik
           </a>
         </footer>
       </div>
