@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppDispatch } from '@/redux/typed-hooks';
 import { restorePlant } from '../../redux/plants/thunks';
-import { Alert, Button, Heading, Logo, RestoreIcon } from '@/components';
+import { Alert, Button, Heading, Logo } from '@/components';
+import { RestoreIcon } from '@/icons';
 import { PlantDescription, PlantChart } from '../../components';
 import { useFetchPlantsInTrash } from './useFetchPlantsInTrash';
 import { useDeletePlants } from './useDeletePlants';

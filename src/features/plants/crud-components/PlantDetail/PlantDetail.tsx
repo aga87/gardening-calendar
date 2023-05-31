@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Alert, Button, Heading, Logo, TrashIcon } from '@/components';
+import { Alert, Button, Heading, Logo } from '@/components';
+import { TrashIcon } from '@/icons';
 import { capitalize } from '@/utils';
 import { useMoveToTrash } from './useMoveToTrash';
 import { useFetchPlantDetail, useRedirect } from '../../hooks';
