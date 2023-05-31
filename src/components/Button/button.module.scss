@@ -18,6 +18,18 @@
     }
   }
 
+  &.button--tertiary {
+    background-color: $color-ui-danger;
+    border-color: $color-ui-danger;
+
+    &:active {
+      color: $color-ui-danger;
+      background-color: $color-canvas-primary;
+      border-color: $color-ui-danger;
+      outline: none;
+    }
+  }
+
   &__icon {
     position: absolute;
     left: 0.5rem * $blh;

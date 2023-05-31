@@ -1,13 +1,10 @@
-import { Types } from 'mongoose';
 import { connectToDB } from '@/api/libs/db';
 import {
   addPlant,
-  deletePlantsFromTrash,
   getPlantsWithCount
 } from '@/api/services/plant-data.service';
 import { validatePlantSchema } from '@/api/models/Plant';
 import { authMiddleware, errMiddleware } from '@/api/middleware';
-import { isValidObjectId } from '@/api/utils';
 import type {
   CustomReq,
   PlantsWithCountRes,
@@ -57,49 +54,8 @@ const handler = async (req: CustomReq, res: Res<Data | ServerError>) => {
         errMiddleware(err, res);
       }
       break;
-    case 'DELETE':
-      const {
-        query: { id }
-      } = req;
-
-      if (!id)
-        return res.status(400).send({
-          error: 'Plant IDs are missing. Please provide at least one ID'
-        });
-
-      const ids = Array.isArray(id) ? id : [id];
-
-      const invalidIds = ids.filter(id => !isValidObjectId(id));
-
-      if (invalidIds.length > 0) {
-        return res.status(404).send({
-          error: `Plants with following ids were not found: ${invalidIds.join(
-            ', '
-          )}`
-        });
-      }
-
-      const plantIds = ids.map(id => new Types.ObjectId(id));
-
-      const PLANT_IN_TRASH_ERROR_MSG =
-        'The selected plants cannot be deleted because some of them are not in the trash.';
-      try {
-        const deletedCount = await deletePlantsFromTrash({
-          plantIds,
-          userId,
-          plantInTrashErrorMsg: PLANT_IN_TRASH_ERROR_MSG
-        });
-        return res
-          .status(200)
-          .send({ message: `${deletedCount} plants have been deleted.` });
-      } catch (err: unknown) {
-        if (err instanceof Error && err.message === PLANT_IN_TRASH_ERROR_MSG)
-          return res.status(400).send({ error: err.message });
-        errMiddleware(err, res);
-      }
-      break;
     default:
-      res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
+      res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).send({ error: `Method ${method} Not Allowed` });
   }
 };

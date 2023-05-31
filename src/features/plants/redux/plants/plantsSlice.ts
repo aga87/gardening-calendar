@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Plant, PlantDetail, PlantsWithCount } from '../../types';
+import type { Plant, PlantDetail } from '../../types';
 
 const initialState = {
   // Plants
@@ -15,7 +15,20 @@ const initialState = {
   plantDetailError: null as null | string,
   // Update plant detail
   isLoadingPlantDetailUpdate: false,
-  plantDetailUpdateError: null as null | string
+  plantDetailUpdateError: null as null | string,
+  // Plants in trash
+  plantsInTrash: [] as Plant[],
+  isLoadingPlantsInTrash: false,
+  plantsInTrashError: null as null | string,
+  // Move plant to trash
+  isLoadingMovePlantToTrash: false,
+  movePlantToTrashError: null as string | null,
+  // Restore plant
+  isLoadingRestorePlant: false,
+  restorePlantError: null as null | string,
+  // Delete plants
+  isLoadingDeletePlants: false,
+  deletePlantsError: null as null | string
 };
 
 export const plantsSlice = createSlice({
@@ -23,9 +36,9 @@ export const plantsSlice = createSlice({
   initialState,
   reducers: {
     // GET plants
-    setPlants: (state, action: PayloadAction<PlantsWithCount>) => ({
+    setPlants: (state, action: PayloadAction<Plant[]>) => ({
       ...state,
-      plants: action.payload.plants
+      plants: action.payload
     }),
     setPlantsLoading: (state, action: PayloadAction<boolean>) => ({
       ...state,
@@ -92,6 +105,67 @@ export const plantsSlice = createSlice({
     ) => ({
       ...state,
       plantDetailUpdateError: action.payload
+    }),
+    // GET plants in trash
+    setPlantsInTrashLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingPlantsInTrash: action.payload
+    }),
+    setPlantsInTrash: (state, action: PayloadAction<Plant[]>) => ({
+      ...state,
+      plantsInTrash: action.payload
+    }),
+    setPlantsInTrashError: (state, action: PayloadAction<null | string>) => ({
+      ...state,
+      plantsInTrashError: action.payload
+    }),
+    // Move plant to trash
+    setMovePlantToTrashLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingMovePlantToTrash: action.payload
+    }),
+    setMovePlantToTrash: (state, action: PayloadAction<Plant['_id']>) => ({
+      ...state,
+      plants: state.plants.filter(plant => plant._id !== action.payload),
+      plantDetails: state.plantDetails.filter(
+        plant => plant._id !== action.payload
+      )
+    }),
+    setMovePlantToTrashError: (
+      state,
+      action: PayloadAction<null | string>
+    ) => ({
+      ...state,
+      movePlantToTrashError: action.payload
+    }),
+    // Restore plant
+    setRestorePlantLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingRestorePlant: action.payload
+    }),
+    setRestorePlant: (state, action: PayloadAction<Plant>) => ({
+      ...state,
+      plants: [...state.plants, action.payload],
+      plantsInTrash: state.plantsInTrash.filter(
+        plant => plant._id !== action.payload._id
+      )
+    }),
+    setRestorePlantError: (state, action: PayloadAction<null | string>) => ({
+      ...state,
+      restorePlantError: action.payload
+    }),
+    // Delete plants
+    setDeletePlantsLoading: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isLoadingDeletePlants: action.payload
+    }),
+    setDeletePlants: state => ({
+      ...state,
+      plantsInTrash: []
+    }),
+    setDeletePlantsError: (state, action: PayloadAction<null | string>) => ({
+      ...state,
+      deletePlantsError: action.payload
     })
   }
 });
@@ -114,5 +188,21 @@ export const {
   // New plant detail
   setPlantDetailUpdate,
   setPlantDetailUpdateLoading,
-  setPlantDetailUpdateError
+  setPlantDetailUpdateError,
+  // Plants in trash
+  setPlantsInTrash,
+  setPlantsInTrashLoading,
+  setPlantsInTrashError,
+  // Move plant to trash
+  setMovePlantToTrashLoading,
+  setMovePlantToTrash,
+  setMovePlantToTrashError,
+  // Restore plant
+  setRestorePlantLoading,
+  setRestorePlant,
+  setRestorePlantError,
+  // Delete plants
+  setDeletePlantsLoading,
+  setDeletePlants,
+  setDeletePlantsError
 } = plantsSlice.actions;

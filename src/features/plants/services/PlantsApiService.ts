@@ -1,12 +1,6 @@
 import { createApiInstance, getError } from '@/libs/axios';
 import { getAuthToken } from '@/features/auth';
-import type {
-  NewPlant,
-  NewPlantDetail,
-  Plant,
-  PlantDetail,
-  PlantsWithCount
-} from '../types';
+import type { NewPlant, NewPlantDetail, Plant, PlantDetail } from '../types';
 
 const getApiInstance = async () => {
   const { authToken } = await getAuthToken();
@@ -30,14 +24,14 @@ export const PlantsApiService = {
       return { plant: null, error: getError(err) };
     }
   },
-  getPlants: async () => {
+  getPlants: async ({ inTrash }: { inTrash: boolean }) => {
     try {
       const apiInstance = await getApiInstance();
-      const res = await apiInstance.get('/api/plants?isInTrash=false');
-      const plantsWithCount: PlantsWithCount = res.data;
-      return { plantsWithCount, error: null };
+      const res = await apiInstance.get(`/api/plants?isInTrash=${inTrash}`);
+      const plants: Plant[] = res.data.plants;
+      return { plants, error: null };
     } catch (err: unknown) {
-      return { plantsWithCount: null, error: getError(err) };
+      return { plants: null, error: getError(err) };
     }
   },
   getPlantDetail: async (id: Plant['_id']) => {
@@ -70,6 +64,33 @@ export const PlantsApiService = {
       };
     } catch (err: unknown) {
       return { updatedPlantDetail: null, error: getError(err) };
+    }
+  },
+  updatePlantTrashStatus: async ({
+    plantId,
+    isInTrash
+  }: {
+    plantId: Plant['_id'];
+    isInTrash: boolean;
+  }) => {
+    try {
+      const apiInstance = await getApiInstance();
+      const res = await apiInstance.put(`/api/plants/${plantId}/trash`, {
+        isInTrash
+      });
+      const updatedPlantDetail: PlantDetail | null = res.data;
+      return { updatedPlantDetail, error: null };
+    } catch (err) {
+      return { updatedPlantDetail: null, error: getError(err) };
+    }
+  },
+  deletePlantsFromTrash: async () => {
+    try {
+      const apiInstance = await getApiInstance();
+      await apiInstance.delete('/api/plants/trash');
+      return { error: null };
+    } catch (err) {
+      return { error: getError(err) };
     }
   }
 };

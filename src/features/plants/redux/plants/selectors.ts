@@ -37,3 +37,27 @@ export const selectIsLoadingPlantDetailUpdate = (state: RootState): boolean =>
 
 export const selectPlantDetailUpdateError = (state: RootState): string | null =>
   state.plantsReducer.plantDetailUpdateError;
+
+// GET plants in trash
+export const selectPlantsInTrash = (state: RootState): Plant[] =>
+  state.plantsReducer.plantsInTrash;
+
+export const selectIsLoadingPlantsInTrash = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingPlantsInTrash;
+
+export const selectPlantsInTrashError = (state: RootState): string | null =>
+  state.plantsReducer.plantsInTrashError;
+
+// MOVE plant to trash
+export const selectIsLoadingMovePlantToTrash = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingMovePlantToTrash;
+
+export const selectMovePlantToTrashError = (state: RootState): string | null =>
+  state.plantsReducer.movePlantToTrashError;
+
+// Delete plants
+export const selectIsLoadingDeletePlants = (state: RootState): boolean =>
+  state.plantsReducer.isLoadingDeletePlants;
+
+export const selectDeletePlantsError = (state: RootState): string | null =>
+  state.plantsReducer.deletePlantsError;

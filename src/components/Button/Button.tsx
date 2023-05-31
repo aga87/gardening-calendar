@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './button.module.scss';
 
 type ButtonProps = {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
   text: string;
   icon?: React.ReactNode;
   handleClick: () => void;
@@ -17,6 +17,8 @@ export const Button = ({
   let className = styles.button;
   if (variant === 'secondary') {
     className = `${className} ${styles['button--secondary']}`;
+  } else if (variant === 'tertiary') {
+    className = `${className} ${styles['button--tertiary']}`;
   }
 
   return (

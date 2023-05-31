@@ -22,6 +22,7 @@ export * from './icons/GitHubIcon';
 export * from './icons/GoogleIcon';
 export * from './icons/HamburgerIcon';
 export * from './icons/LogOutIcon';
+export * from './icons/RestoreIcon';
 export * from './icons/TrashIcon';
 export * from './Logo/Logo';
 export * from './nav/NavButton/NavButton';
