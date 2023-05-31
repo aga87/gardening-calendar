@@ -1,14 +1,18 @@
 import React from 'react';
 import { useAppDispatch } from '@/redux/typed-hooks';
 import { restorePlant } from '../../redux/plants/thunks';
-import { Alert, Heading, Logo, RestoreIcon } from '@/components';
+import { Alert, Button, Heading, Logo, RestoreIcon } from '@/components';
 import { PlantDescription, PlantChart } from '../../components';
 import { useFetchPlantsInTrash } from './useFetchPlantsInTrash';
+import { useDeletePlants } from './useDeletePlants';
 import type { Plant } from '../../types';
 import styles from './plants-in-trash.module.scss';
 
 export const PlantsInTrash = () => {
   const { plantsInTrash, isLoading, error } = useFetchPlantsInTrash();
+
+  const { handleDeleteAllPlants, isLoadingDeletePlants, deletePlantsError } =
+    useDeletePlants();
 
   const dispatch = useAppDispatch();
 
@@ -53,8 +57,20 @@ export const PlantsInTrash = () => {
   if (error) return <Alert type='error' message={error} />;
   return (
     <>
-      <Heading text='Trash' />
+      <Heading text={`Trash (${plantsInTrash.length})`} />
+      {deletePlantsError && (
+        <div className={styles.errorWrapper}>
+          <Alert type='error' message={deletePlantsError} />
+        </div>
+      )}
       <ul className={styles.list}>{plantListItems}</ul>
+      {plantsInTrash.length > 0 && (
+        <Button
+          variant='tertiary'
+          text='Delete all'
+          handleClick={handleDeleteAllPlants}
+        />
+      )}
     </>
   );
 };
