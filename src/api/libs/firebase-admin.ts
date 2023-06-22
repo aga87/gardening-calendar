@@ -1,10 +1,17 @@
 import * as admin from 'firebase-admin';
 import type { ServiceAccount } from 'firebase-admin';
-import serviceAccount from './firebaseAdminServiceAccountKey.json';
+
+const serviceAccount = process.env.FIREBASE_ADMIN_SERVICE_ACCOUNT;
+
+if (!serviceAccount) {
+  throw Error('Firebase service account key is missing');
+}
 
 const firebaseAdmin = !admin.apps.length
   ? admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as ServiceAccount)
+      credential: admin.credential.cert(
+        JSON.parse(serviceAccount) as ServiceAccount
+      )
     })
   : admin.app();
 
