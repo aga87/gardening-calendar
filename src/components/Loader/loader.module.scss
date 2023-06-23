@@ -16,7 +16,7 @@
   align-items: center;
 
   &__icon {
-    fill: $color-canvas-secondary;
+    fill: $color-canvas-secondary !important;
     padding: 5px;
     border-radius: 50%;
     outline: 2px solid $color-canvas-secondary;

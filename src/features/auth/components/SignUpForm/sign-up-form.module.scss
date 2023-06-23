@@ -11,8 +11,8 @@
 }
 
 .inputIcon {
-  font-size: inherit;
-  fill: $color-text-tertiary;
+  font-size: inherit !important;
+  fill: $color-text-tertiary !important;
 }
 
 .progressBarContainer {

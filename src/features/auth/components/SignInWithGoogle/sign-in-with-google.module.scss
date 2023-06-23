@@ -3,5 +3,5 @@
 
 .icon {
   @include t3;
-  fill: $color-text-tertiary;
+  fill: $color-text-tertiary !important;
 }
