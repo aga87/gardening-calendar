@@ -1,5 +1,9 @@
 # Gardening Calendar
 
+## Demo
+
+The app is deployed to [Vercel](https://vercel.com/). See the [live demo](https://gardening-calendar.vercel.app). Alternatively, see the app screenshots below.
+
 ## Features
 
 ### Authentication
