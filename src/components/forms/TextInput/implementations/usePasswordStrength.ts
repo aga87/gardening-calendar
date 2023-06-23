@@ -32,9 +32,7 @@ export const usePasswordStrength = () => {
     hasSpecialChar: 'at least one symbol (@#$)'
   };
 
-  const handlePasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
     setPasswordStrength(checkPasswordStrength(e.target.value));
   };
